@@ -8,6 +8,7 @@ import data from "../../data.json";
 export default function Dashboard() {
     const [viewState, setViewState] = useState(0);
     const [isFreezeModalOpen, setIsFreezeModalOpen] = useState(false);
+    const [isCardModalOpen, setIsCardModalOpen] = useState(false);
     const [freezeUsed, setFreezeUsed] = useState(false);
     const [studentState, setStudentState] = useState(data.student);
     const [currentDay, setCurrentDay] = useState(1);
@@ -67,9 +68,14 @@ export default function Dashboard() {
                         <p className="text-zinc-400 text-sm font-medium">Welcome back,</p>
                         <h1 className="text-2xl font-bold text-white">{student.name}</h1>
                     </div>
-                    <div className="h-11 w-11 bg-indigo-500/20 rounded-full flex items-center justify-center border border-indigo-500/30 overflow-hidden">
+                    <motion.div 
+                        whileHover={{ scale: 1.05, boxShadow: "0px 0px 15px rgba(99,102,241,0.5)" }}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={() => setIsCardModalOpen(true)}
+                        className="h-11 w-11 bg-indigo-500/20 rounded-full flex items-center justify-center border border-indigo-500/30 overflow-hidden cursor-pointer"
+                    >
                         <img src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${student.name}`} alt="avatar" className="w-full h-full object-cover" />
-                    </div>
+                    </motion.div>
                 </div>
 
                 <div className="space-y-4">
@@ -122,19 +128,45 @@ export default function Dashboard() {
                     </div>
 
                     <div className="bg-white/5 border border-white/10 rounded-2xl p-4">
-                        <div className="flex justify-between items-end mb-2">
-                            <span className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Challenge Progress</span>
+                        <div className="flex justify-between items-end mb-4">
+                            <span className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Journey Constellation</span>
                             <span className="text-sm font-black text-indigo-400">{student.progressPercentage}%</span>
                         </div>
-                        <div className="h-3 w-full bg-black/50 rounded-full overflow-hidden border border-white/5 relative">
-                            <motion.div
-                                initial={{ width: 0 }}
-                                animate={{ width: `${student.progressPercentage}%` }}
-                                transition={{ duration: 1, ease: "easeOut" }}
-                                className="h-full bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full relative"
-                            >
-                                <div className="absolute inset-0 bg-white/20 w-full animate-pulse"></div>
-                            </motion.div>
+                        <div className="relative w-full h-24 bg-[#0a0a0a] rounded-xl border border-white/5 overflow-hidden flex items-center justify-center shadow-inner">
+                            <svg className="absolute inset-0 w-full h-full" preserveAspectRatio="none">
+                                <path d="M 0 50 Q 100 0, 200 50 T 400 50" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="2" strokeDasharray="4 4" />
+                                <motion.path 
+                                    initial={{ pathLength: 0 }}
+                                    animate={{ pathLength: student.progressPercentage / 100 }}
+                                    transition={{ duration: 2, ease: "easeInOut" }}
+                                    d="M 0 50 Q 100 0, 200 50 T 400 50" 
+                                    fill="none" 
+                                    stroke="url(#glowGradient)" 
+                                    strokeWidth="3"
+                                    className="drop-shadow-[0_0_8px_rgba(99,102,241,0.8)]"
+                                />
+                                <defs>
+                                    <linearGradient id="glowGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                        <stop offset="0%" stopColor="#6366f1" />
+                                        <stop offset="100%" stopColor="#a855f7" />
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                            {[0, 1, 2, 3, 4].map((i) => (
+                                <motion.div 
+                                    key={i}
+                                    initial={{ scale: 0 }}
+                                    animate={{ scale: (student.progressPercentage / 100) >= (i/4) ? 1 : 0.4 }}
+                                    transition={{ delay: 1 + i * 0.1 }}
+                                    className={`absolute w-2.5 h-2.5 rounded-full z-10 transition-colors duration-500 ${
+                                        (student.progressPercentage / 100) >= (i/4) ? "bg-white shadow-[0_0_15px_rgba(255,255,255,1)]" : "bg-zinc-700"
+                                    }`}
+                                    style={{
+                                        left: `${10 + (i * 20)}%`,
+                                        top: i === 1 || i === 3 ? '30%' : '50%'
+                                    }}
+                                />
+                            ))}
                         </div>
                     </div>
                 </div>
@@ -246,6 +278,55 @@ export default function Dashboard() {
                                     className="py-3 rounded-xl font-bold text-sm bg-blue-500 hover:bg-blue-600 text-white shadow-[0_0_15px_rgba(59,130,246,0.4)] transition-all"
                                 >
                                     Confirm Use
+                                </button>
+                            </div>
+                        </motion.div>
+                    </div>
+                )}
+            </AnimatePresence>
+
+            <AnimatePresence>
+                {isCardModalOpen && (
+                    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md" onClick={() => setIsCardModalOpen(false)}>
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.8, rotateY: 90 }}
+                            animate={{ opacity: 1, scale: 1, rotateY: 0 }}
+                            exit={{ opacity: 0, scale: 0.8, rotateY: -90 }}
+                            transition={{ type: "spring", stiffness: 200, damping: 20 }}
+                            onClick={(e) => e.stopPropagation()}
+                            style={{ transformStyle: "preserve-3d" }}
+                            className="bg-zinc-900 border border-white/20 rounded-3xl p-6 w-full max-w-[320px] shadow-[0_0_50px_rgba(99,102,241,0.3)] relative overflow-hidden"
+                        >
+                            <motion.div 
+                                animate={{ x: ["-100%", "200%"] }} 
+                                transition={{ duration: 2.5, repeat: Infinity, ease: "linear", repeatDelay: 1 }}
+                                className="absolute top-0 -left-1/4 w-1/2 h-full bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-12 z-0 pointer-events-none" 
+                            />
+                            
+                            <div className="text-center relative z-10" style={{ transform: "translateZ(40px)" }}>
+                                <div className="w-24 h-24 mx-auto bg-indigo-500/20 rounded-full border-2 border-indigo-500 overflow-hidden shadow-[0_0_20px_rgba(99,102,241,0.5)] mb-4">
+                                    <img src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${student.name}`} alt="avatar" className="w-full h-full object-cover" />
+                                </div>
+                                <h2 className="text-2xl font-black text-white drop-shadow-md">{student.name}</h2>
+                                <p className="text-indigo-400 font-bold text-sm tracking-widest uppercase mt-1">HyperFusion Hacker</p>
+                            </div>
+
+                            <div className="grid grid-cols-2 gap-4 mt-8 relative z-10" style={{ transform: "translateZ(20px)" }}>
+                                <div className="bg-black/50 rounded-xl p-3 text-center border border-white/5">
+                                    <Flame className="w-6 h-6 mx-auto mb-1 text-orange-500" />
+                                    <div className="text-xl font-bold">{student.currentStreak}</div>
+                                    <div className="text-[10px] text-zinc-500 uppercase font-bold">Streak</div>
+                                </div>
+                                <div className="bg-black/50 rounded-xl p-3 text-center border border-white/5">
+                                    <Trophy className="w-6 h-6 mx-auto mb-1 text-yellow-400" />
+                                    <div className="text-xl font-bold">{student.achievements.length}</div>
+                                    <div className="text-[10px] text-zinc-500 uppercase font-bold">Badges</div>
+                                </div>
+                            </div>
+                            
+                            <div className="mt-8 relative z-10" style={{ transform: "translateZ(30px)" }}>
+                                <button className="w-full bg-indigo-500 hover:bg-indigo-600 text-white py-3 rounded-xl font-bold text-sm transition-all shadow-[0_0_15px_rgba(99,102,241,0.5)]">
+                                    Download for LinkedIn
                                 </button>
                             </div>
                         </motion.div>
