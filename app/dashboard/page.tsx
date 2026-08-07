@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
@@ -191,7 +191,7 @@ export default function Dashboard() {
                                 {asciiFrames[asciiFrame]}
                             </div>
                         ) : (
-                            <img src={`https://api.dicebear.com/7.x/micah/svg?seed=${studentState.name || 'Student'}&backgroundColor=transparent`} alt="avatar" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" />
+                            <img src={`https://api.dicebear.com/7.x/bottts/svg?seed=${studentState.name || 'Student'}&backgroundColor=transparent`} alt="avatar" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" />
                         )}
                         <div className="absolute inset-0 bg-indigo-500/20 group-hover:bg-transparent transition-colors duration-300 pointer-events-none"></div>
                     </div>
@@ -552,7 +552,7 @@ export default function Dashboard() {
                             
                             <div className="text-center relative z-10" style={{ transform: "translateZ(40px)" }}>
                                 <div className="w-24 h-24 mx-auto rounded-full border-2 border-indigo-500 overflow-hidden shadow-[0_0_20px_rgba(99,102,241,0.5)] mb-4 bg-zinc-900 flex items-center justify-center">
-                                    <img src={`https://api.dicebear.com/7.x/micah/svg?seed=${student.name}&backgroundColor=transparent`} alt="avatar" className="w-full h-full object-cover scale-125 translate-y-1" />
+                                    <img src={`https://api.dicebear.com/7.x/bottts/svg?seed=${student.name}&backgroundColor=transparent`} alt="avatar" className="w-full h-full object-cover scale-125 translate-y-1" />
                                 </div>
                                 <h2 className="text-2xl font-black text-white drop-shadow-md">{student.name}</h2>
                                 <p className="text-indigo-400 font-bold text-sm tracking-widest uppercase mt-1">Elevatex Hacker</p>
