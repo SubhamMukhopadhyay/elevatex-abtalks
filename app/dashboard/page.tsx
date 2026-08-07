@@ -86,7 +86,17 @@ export default function Dashboard() {
                             >
                                 <Flame className={`w-8 h-8 mb-2 z-10 ${student.currentStreak > 0 ? "text-orange-500 drop-shadow-[0_0_10px_rgba(249,115,22,0.8)]" : "text-zinc-600"}`} />
                             </motion.div>
-                            <span className="text-2xl font-black z-10">{student.currentStreak}</span>
+                            <AnimatePresence mode="popLayout">
+                                <motion.span 
+                                    key={student.currentStreak}
+                                    initial={{ opacity: 0, y: -20, scale: 0.5 }}
+                                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                                    className="text-2xl font-black z-10 inline-block"
+                                >
+                                    {student.currentStreak}
+                                </motion.span>
+                            </AnimatePresence>
                             <span className="text-[10px] text-zinc-400 uppercase tracking-widest font-bold mt-1 z-10">Day Streak</span>
                         </motion.div>
                         <motion.div 
@@ -96,7 +106,17 @@ export default function Dashboard() {
                         >
                             <div className="absolute top-0 right-0 w-16 h-16 bg-indigo-500/10 rounded-full blur-xl"></div>
                             <Trophy className="w-8 h-8 mb-2 z-10 text-yellow-400" />
-                            <span className="text-2xl font-black z-10">{student.achievements.length}</span>
+                            <AnimatePresence mode="popLayout">
+                                <motion.span 
+                                    key={student.achievements.length}
+                                    initial={{ opacity: 0, y: -20, scale: 0.5 }}
+                                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                                    className="text-2xl font-black z-10 inline-block"
+                                >
+                                    {student.achievements.length}
+                                </motion.span>
+                            </AnimatePresence>
                             <span className="text-[10px] text-zinc-400 uppercase tracking-widest font-bold mt-1 z-10">Badges</span>
                         </motion.div>
                     </div>
