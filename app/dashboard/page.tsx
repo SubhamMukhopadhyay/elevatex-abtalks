@@ -80,7 +80,12 @@ export default function Dashboard() {
                             className="bg-white/5 border border-white/10 rounded-2xl p-4 flex flex-col items-center justify-center relative overflow-hidden cursor-default shadow-lg"
                         >
                             <div className="absolute top-0 right-0 w-16 h-16 bg-orange-500/10 rounded-full blur-xl"></div>
-                            <Flame className={`w-8 h-8 mb-2 z-10 ${student.currentStreak > 0 ? "text-orange-500" : "text-zinc-600"}`} />
+                            <motion.div
+                                animate={student.currentStreak > 0 ? { scale: [1, 1.1, 1, 1.05, 1], rotate: [0, -3, 3, -1, 0] } : {}}
+                                transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                            >
+                                <Flame className={`w-8 h-8 mb-2 z-10 ${student.currentStreak > 0 ? "text-orange-500 drop-shadow-[0_0_10px_rgba(249,115,22,0.8)]" : "text-zinc-600"}`} />
+                            </motion.div>
                             <span className="text-2xl font-black z-10">{student.currentStreak}</span>
                             <span className="text-[10px] text-zinc-400 uppercase tracking-widest font-bold mt-1 z-10">Day Streak</span>
                         </motion.div>
@@ -147,25 +152,35 @@ export default function Dashboard() {
                     </div>
                 )}
 
-                <div className="bg-gradient-to-br from-indigo-500/10 to-purple-500/10 border border-indigo-500/20 rounded-3xl p-6 space-y-5 relative overflow-hidden shadow-xl">
-                    <div className="flex justify-between items-center relative z-10">
-                        <span className="text-xs font-bold bg-indigo-500/20 text-indigo-300 px-3 py-1.5 rounded-lg uppercase">Day {todayTask.day}</span>
+                <motion.div 
+                    animate={{ y: [0, -4, 0], rotateX: [0, 2, -2, 0], rotateY: [0, -2, 2, 0] }}
+                    transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+                    style={{ transformStyle: "preserve-3d" }}
+                    className="bg-gradient-to-br from-indigo-500/10 to-purple-500/10 border border-indigo-500/20 rounded-3xl p-6 space-y-5 relative overflow-hidden shadow-[0_10px_30px_rgba(99,102,241,0.15)]"
+                >
+                    <motion.div 
+                        animate={{ x: ["-100%", "200%"] }} 
+                        transition={{ duration: 3, repeat: Infinity, ease: "linear", repeatDelay: 3 }}
+                        className="absolute top-0 -left-1/4 w-1/2 h-full bg-gradient-to-r from-transparent via-white/10 to-transparent skew-x-12 z-0 pointer-events-none" 
+                    />
+                    <div className="flex justify-between items-center relative z-10" style={{ transform: "translateZ(10px)" }}>
+                        <span className="text-xs font-bold bg-indigo-500/20 text-indigo-300 px-3 py-1.5 rounded-lg uppercase shadow-sm">Day {todayTask.day}</span>
                         <span className="text-xs font-medium text-zinc-400 bg-black/20 px-3 py-1.5 rounded-lg">{student.standing}</span>
                     </div>
-                    <div className="relative z-10">
-                        <h2 className="text-xl font-bold text-white mb-2">{todayTask.title}</h2>
+                    <div className="relative z-10" style={{ transform: "translateZ(20px)" }}>
+                        <h2 className="text-xl font-bold text-white mb-2 drop-shadow-md">{todayTask.title}</h2>
                         <p className="text-sm text-zinc-400 leading-relaxed">{todayTask.description}</p>
                     </div>
-                    <Link href={`/day/${todayTask.day}`} className="block w-full relative z-10">
+                    <Link href={`/day/${todayTask.day}`} className="block w-full relative z-10" style={{ transform: "translateZ(30px)" }}>
                         <motion.button 
                             whileHover={{ scale: 1.02 }}
                             whileTap={{ scale: 0.95, rotate: [0, -2, 2, -2, 0] }}
-                            className="w-full bg-white text-black hover:bg-zinc-200 py-3.5 rounded-xl font-bold text-sm shadow-[0_0_15px_rgba(255,255,255,0.2)]"
+                            className="w-full bg-white text-black hover:bg-zinc-200 py-3.5 rounded-xl font-bold text-sm shadow-[0_0_20px_rgba(255,255,255,0.4)]"
                         >
                             Open Today's Challenge
                         </motion.button>
                     </Link>
-                </div>
+                </motion.div>
 
                 {student.achievements.length > 0 && (
                     <div className="space-y-3 pb-8">
