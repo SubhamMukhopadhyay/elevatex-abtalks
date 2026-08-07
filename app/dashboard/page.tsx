@@ -2,7 +2,7 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { Flame, Trophy, Snowflake, AlertTriangle, ChevronLeft, Headphones, Play, Pause, RotateCcw } from "lucide-react";
+import { Flame, Trophy, Snowflake, AlertTriangle, ChevronLeft, Headphones, Play, Pause, RotateCcw, CloudRain, Sparkles, Coffee } from "lucide-react";
 import { useRouter } from "next/navigation";
 import data from "../../data.json";
 
@@ -21,15 +21,24 @@ export default function Dashboard() {
     const [ghostProgress, setGhostProgress] = useState(65);
 
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-    const [selectedTrack, setSelectedTrack] = useState("🎧 Lofi Beats to Code to");
+    const [selectedTrack, setSelectedTrack] = useState("Lofi Beats to Code to");
     const tracksData: Record<string, string> = {
-        "🎧 Lofi Beats to Code to": "https://cdn.pixabay.com/audio/2022/05/27/audio_1808fbf07a.mp3",
-        "🌧️ Midnight Rain": "https://cdn.pixabay.com/audio/2021/08/09/audio_6b1070fc93.mp3",
-        "🌌 Cyber Synth": "https://cdn.pixabay.com/audio/2022/10/25/audio_2db5ee5ce3.mp3",
-        "☕ Cafe Ambience": "https://cdn.pixabay.com/audio/2022/01/18/audio_dcb0b784ae.mp3"
+        "Lofi Beats to Code to": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+        "Midnight Rain": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
+        "Cyber Synth": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
+        "Cafe Ambience": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3"
     };
     const tracks = Object.keys(tracksData);
     const audioRef = useRef<HTMLAudioElement | null>(null);
+
+    const getTrackIcon = (track: string) => {
+        switch (track) {
+            case "Midnight Rain": return <CloudRain className="w-4 h-4 mr-2 text-blue-400" />;
+            case "Cyber Synth": return <Sparkles className="w-4 h-4 mr-2 text-purple-400" />;
+            case "Cafe Ambience": return <Coffee className="w-4 h-4 mr-2 text-amber-400" />;
+            default: return <Headphones className="w-4 h-4 mr-2 text-zinc-400" />;
+        }
+    };
 
     const [isDecoded, setIsDecoded] = useState(false);
     const [asciiFrame, setAsciiFrame] = useState(0);
@@ -386,27 +395,30 @@ export default function Dashboard() {
                     <div className="relative">
                         <button 
                             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                            className="w-full bg-black/40 border border-white/5 rounded-xl p-3 text-xs font-bold text-zinc-300 outline-none flex justify-between items-center hover:bg-white/5 transition-colors"
+                            className="w-full bg-black/40 border border-white/5 rounded-xl p-3 text-xs font-bold text-zinc-300 outline-none flex justify-between items-center hover:bg-white/5 transition-colors z-20 relative"
                         >
-                            <span>{selectedTrack}</span>
+                            <span className="flex items-center">{getTrackIcon(selectedTrack)} {selectedTrack}</span>
                             <ChevronLeft className={`w-4 h-4 transition-transform ${isDropdownOpen ? 'rotate-90' : '-rotate-90'}`} />
                         </button>
                         {isDropdownOpen && (
-                            <motion.div 
-                                initial={{ opacity: 0, y: -10 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                className="absolute top-full left-0 right-0 mt-2 bg-zinc-950 border border-white/10 rounded-xl overflow-hidden z-20 shadow-xl shadow-black"
-                            >
-                                {tracks.map((track, i) => (
-                                    <button
-                                        key={i}
-                                        onClick={() => { setSelectedTrack(track); setIsDropdownOpen(false); }}
-                                        className="w-full text-left px-4 py-3 text-xs font-bold text-zinc-300 hover:bg-indigo-500/20 hover:text-indigo-300 transition-colors border-b border-white/5 last:border-0"
-                                    >
-                                        {track}
-                                    </button>
-                                ))}
-                            </motion.div>
+                            <>
+                                <div className="fixed inset-0 z-10" onClick={() => setIsDropdownOpen(false)}></div>
+                                <motion.div 
+                                    initial={{ opacity: 0, y: -10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    className="absolute top-full left-0 right-0 mt-2 bg-zinc-950 border border-white/10 rounded-xl overflow-hidden z-20 shadow-xl shadow-black"
+                                >
+                                    {tracks.map((track, i) => (
+                                        <button
+                                            key={i}
+                                            onClick={() => { setSelectedTrack(track); setIsDropdownOpen(false); }}
+                                            className="w-full flex items-center text-left px-4 py-3 text-xs font-bold text-zinc-300 hover:bg-indigo-500/20 hover:text-indigo-300 transition-colors border-b border-white/5 last:border-0"
+                                        >
+                                            {getTrackIcon(track)} {track}
+                                        </button>
+                                    ))}
+                                </motion.div>
+                            </>
                         )}
                     </div>
                 </div>
