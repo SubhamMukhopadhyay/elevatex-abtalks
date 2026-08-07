@@ -73,9 +73,9 @@ export default function ChallengeDay({ params }: { params: Promise<{ id: string 
 
             <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="flex-1 space-y-6 pt-4 relative z-10 w-full">
 
-                <Link href="/dashboard" className="text-zinc-500 hover:text-white transition-colors text-sm flex items-center gap-2 font-medium w-fit">
-                    <ChevronLeft className="w-4 h-4" /> Back to Dashboard
-                </Link>
+                <button onClick={() => router.back()} className="text-zinc-500 hover:text-white transition-colors text-sm flex items-center gap-2 font-medium w-fit">
+                    <ChevronLeft className="w-4 h-4" /> Back
+                </button>
 
                 <div className="space-y-2 pt-2">
                     <span className="text-indigo-400 font-bold tracking-widest uppercase text-xs bg-indigo-500/10 px-3 py-1.5 rounded-lg">

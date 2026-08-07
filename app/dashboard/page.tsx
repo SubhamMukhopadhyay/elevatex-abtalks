@@ -1,8 +1,9 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { Flame, Trophy, Snowflake, AlertTriangle, ChevronLeft } from "lucide-react";
+import { Flame, Trophy, Snowflake, AlertTriangle, ChevronLeft, Headphones, Play, Pause, RotateCcw } from "lucide-react";
+import { useRouter } from "next/navigation";
 import data from "../../data.json";
 
 export default function Dashboard() {
@@ -13,15 +14,56 @@ export default function Dashboard() {
     const [studentState, setStudentState] = useState(data.student);
     const [currentDay, setCurrentDay] = useState(1);
     const [completedDays, setCompletedDays] = useState<number[]>([]);
-    
+    const router = useRouter();
+
+    const [timerActive, setTimerActive] = useState(false);
+    const [secondsLeft, setSecondsLeft] = useState(25 * 60);
+    const [ghostProgress, setGhostProgress] = useState(65);
+
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const [selectedTrack, setSelectedTrack] = useState("🎧 Lofi Beats to Code to");
+    const tracksData: Record<string, string> = {
+        "🎧 Lofi Beats to Code to": "https://cdn.pixabay.com/audio/2022/05/27/audio_1808fbf07a.mp3",
+        "🌧️ Midnight Rain": "https://cdn.pixabay.com/audio/2021/08/09/audio_6b1070fc93.mp3",
+        "🌌 Cyber Synth": "https://cdn.pixabay.com/audio/2022/10/25/audio_2db5ee5ce3.mp3",
+        "☕ Cafe Ambience": "https://cdn.pixabay.com/audio/2022/01/18/audio_dcb0b784ae.mp3"
+    };
+    const tracks = Object.keys(tracksData);
+    const audioRef = useRef<HTMLAudioElement | null>(null);
+
+    const [isDecoded, setIsDecoded] = useState(false);
+    const [asciiFrame, setAsciiFrame] = useState(0);
+
+    const asciiFrames = [
+        `@ & % # *\n% # * o +\n# * o + -\n* o + - :`,
+        `# * o + -\n* o + - :\no + - : .\n+ - : .  `,
+        `o + - : .\n+ - : .  \n- : .    \n: .      `
+    ];
+
     // Load state from local storage on mount
     useEffect(() => {
+        // Initialize Audio
+        audioRef.current = new Audio(tracksData[selectedTrack]);
+        audioRef.current.loop = true;
+
+        if ('scrollRestoration' in history) {
+            history.scrollRestoration = 'manual';
+        }
+        window.scrollTo(0, 0);
+        
+        // Force scroll to top after a tiny delay to beat Next.js internal scroll restoration
+        const scrollTimer = setTimeout(() => {
+            window.scrollTo(0, 0);
+        }, 50);
+
         const savedData = localStorage.getItem("hyperfusion_student");
         if (savedData) {
             const parsed = JSON.parse(savedData);
-            setStudentState(parsed.student);
-            setCompletedDays(parsed.completedDays || []);
-            setFreezeUsed(parsed.freezeUsed || false);
+            if (parsed.student) setStudentState(parsed.student);
+            if (parsed.completedDays) setCompletedDays(parsed.completedDays);
+            if (parsed.student && parsed.student.currentStreak > 0) {
+                setCurrentDay(parsed.student.currentStreak);
+            }
             
             // Calculate current day based on completed days
             const maxCompleted = parsed.completedDays?.length ? Math.max(...parsed.completedDays) : 0;
@@ -31,7 +73,72 @@ export default function Dashboard() {
             setStudentState(data.student);
             setCurrentDay(data.student.currentStreak > 0 ? data.student.currentStreak : 1);
         }
+
+        // Mock a real-time progress increase for the Ghost
+        const ghostInterval = setInterval(() => {
+            setGhostProgress(prev => {
+                if (prev < 95) return prev + 1;
+                return prev;
+            });
+        }, 8000); 
+
+        let asciiInterval = setInterval(() => {
+            setAsciiFrame(prev => (prev + 1) % asciiFrames.length);
+        }, 150);
+
+        let decodeTimeout = setTimeout(() => {
+            clearInterval(asciiInterval);
+            setIsDecoded(true);
+        }, 1200);
+
+        return () => {
+            clearInterval(asciiInterval);
+            clearInterval(ghostInterval);
+            clearTimeout(decodeTimeout);
+            if (audioRef.current) {
+                audioRef.current.pause();
+                audioRef.current = null;
+            }
+        };
     }, []);
+
+    // Handle track changes
+    useEffect(() => {
+        if (audioRef.current) {
+            audioRef.current.src = tracksData[selectedTrack];
+            if (timerActive) {
+                audioRef.current.play().catch(e => console.log("Audio playback prevented:", e));
+            }
+        }
+    }, [selectedTrack]);
+
+    useEffect(() => {
+        let interval: NodeJS.Timeout | null = null;
+        if (timerActive && secondsLeft > 0) {
+            if (audioRef.current && audioRef.current.paused) {
+                audioRef.current.play().catch(e => console.log("Audio playback prevented:", e));
+            }
+            interval = setInterval(() => {
+                setSecondsLeft(prev => prev - 1);
+            }, 1000);
+        } else {
+            if (audioRef.current && !audioRef.current.paused) {
+                audioRef.current.pause();
+            }
+            if (secondsLeft === 0) {
+                setTimerActive(false);
+            }
+        }
+        return () => {
+            if (interval) clearInterval(interval);
+        };
+    }, [timerActive, secondsLeft]);
+
+    const formatTime = (secs: number) => {
+        const mins = Math.floor(secs / 60);
+        const s = secs % 60;
+        return `${mins.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+    };
 
     // Get today's task from data.json based on currentDay
     const todayTask = data.tasks.find(t => t.day === currentDay) || data.tasks[0];
@@ -58,9 +165,9 @@ export default function Dashboard() {
             <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} className="space-y-8">
 
                 <div className="pt-2">
-                    <Link href="/" className="text-zinc-500 hover:text-white transition-colors text-sm flex items-center gap-2 font-medium w-fit">
-                        <ChevronLeft className="w-4 h-4" /> Back to Home
-                    </Link>
+                    <button onClick={() => router.back()} className="text-zinc-500 hover:text-white transition-colors text-sm flex items-center gap-2 font-medium w-fit">
+                        <ChevronLeft className="w-4 h-4" /> Back
+                    </button>
                 </div>
 
                 <div className="flex justify-between items-center">
@@ -68,14 +175,17 @@ export default function Dashboard() {
                         <p className="text-zinc-400 text-sm font-medium">Welcome back,</p>
                         <h1 className="text-2xl font-bold text-white">{student.name}</h1>
                     </div>
-                    <motion.div 
-                        whileHover={{ scale: 1.05, boxShadow: "0px 0px 15px rgba(99,102,241,0.5)" }}
-                        whileTap={{ scale: 0.95 }}
-                        onClick={() => setIsCardModalOpen(true)}
-                        className="h-11 w-11 bg-indigo-500/20 rounded-full flex items-center justify-center border border-indigo-500/30 overflow-hidden cursor-pointer"
-                    >
-                        <img src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${student.name}`} alt="avatar" className="w-full h-full object-cover" />
-                    </motion.div>
+                    {/* Interactive Avatar with ASCII Decode */}
+                    <div className="relative w-16 h-16 rounded-full overflow-hidden bg-black border-2 border-indigo-500/50 flex items-center justify-center group cursor-pointer" onClick={() => setIsCardModalOpen(true)}>
+                        {!isDecoded ? (
+                            <div className="text-[8px] leading-[8px] font-mono text-indigo-500 whitespace-pre text-center animate-pulse">
+                                {asciiFrames[asciiFrame]}
+                            </div>
+                        ) : (
+                            <img src={`https://api.dicebear.com/7.x/micah/svg?seed=${studentState.name || 'Student'}&backgroundColor=transparent`} alt="avatar" className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" />
+                        )}
+                        <div className="absolute inset-0 bg-indigo-500/20 group-hover:bg-transparent transition-colors duration-300 pointer-events-none"></div>
+                    </div>
                 </div>
 
                 <div className="space-y-4">
@@ -130,7 +240,16 @@ export default function Dashboard() {
                     <div className="bg-white/5 border border-white/10 rounded-2xl p-4">
                         <div className="flex justify-between items-end mb-4">
                             <span className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Journey Constellation</span>
-                            <span className="text-sm font-black text-indigo-400">{student.progressPercentage}%</span>
+                            <AnimatePresence mode="popLayout">
+                                <motion.span 
+                                    key={student.progressPercentage}
+                                    initial={{ opacity: 0, scale: 0.5 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    className="text-xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400 drop-shadow-[0_0_10px_rgba(168,85,247,0.5)]"
+                                >
+                                    {student.progressPercentage}%
+                                </motion.span>
+                            </AnimatePresence>
                         </div>
                         <div className="relative w-full h-24 bg-[#0a0a0a] rounded-xl border border-white/5 overflow-hidden flex items-center justify-center shadow-inner">
                             <svg className="absolute inset-0 w-full h-full" preserveAspectRatio="none">
@@ -234,18 +353,134 @@ export default function Dashboard() {
                     </Link>
                 </motion.div>
 
-                {student.achievements.length > 0 && (
-                    <div className="space-y-3 pb-8">
-                        <h3 className="text-xs font-bold text-zinc-500 uppercase tracking-widest ml-1">Your Trophies</h3>
-                        <div className="flex flex-wrap gap-2">
+                {/* Night Owl Deck */}
+                <div className="bg-[#0a0a0a] border border-white/10 rounded-3xl p-5 relative shadow-lg">
+                    <div className="flex justify-between items-center mb-4">
+                        <div className="flex items-center gap-2">
+                            <Headphones className="w-4 h-4 text-purple-400" />
+                            <span className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Night Owl Deck</span>
+                        </div>
+                        <span className="text-[10px] font-bold bg-white/10 px-2 py-1 rounded-full text-zinc-300">Focus Mode</span>
+                    </div>
+                    
+                    <div className="flex items-center justify-between bg-black/40 rounded-2xl p-4 border border-white/5 mb-4">
+                        <div>
+                            <div className="text-[10px] font-bold text-zinc-500 tracking-widest mb-1">POMODORO</div>
+                            <div className="text-2xl font-black text-white font-mono">{formatTime(secondsLeft)}</div>
+                        </div>
+                        <div className="flex gap-2">
+                            <button 
+                                onClick={() => setTimerActive(!timerActive)}
+                                className="h-10 w-10 rounded-full bg-indigo-500/20 text-indigo-400 flex items-center justify-center border border-indigo-500/30 hover:bg-indigo-500/30 transition-all"
+                            >
+                                {timerActive ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4 ml-0.5" />}
+                            </button>
+                            <button 
+                                onClick={() => { setTimerActive(false); setSecondsLeft(25 * 60); }}
+                                className="h-10 w-10 rounded-full bg-white/5 text-zinc-400 flex items-center justify-center border border-white/10 hover:bg-white/10 transition-all"
+                            >
+                                <RotateCcw className="w-4 h-4" />
+                            </button>
+                        </div>
+                    </div>
+                    <div className="relative">
+                        <button 
+                            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                            className="w-full bg-black/40 border border-white/5 rounded-xl p-3 text-xs font-bold text-zinc-300 outline-none flex justify-between items-center hover:bg-white/5 transition-colors"
+                        >
+                            <span>{selectedTrack}</span>
+                            <ChevronLeft className={`w-4 h-4 transition-transform ${isDropdownOpen ? 'rotate-90' : '-rotate-90'}`} />
+                        </button>
+                        {isDropdownOpen && (
+                            <motion.div 
+                                initial={{ opacity: 0, y: -10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                className="absolute top-full left-0 right-0 mt-2 bg-zinc-950 border border-white/10 rounded-xl overflow-hidden z-20 shadow-xl shadow-black"
+                            >
+                                {tracks.map((track, i) => (
+                                    <button
+                                        key={i}
+                                        onClick={() => { setSelectedTrack(track); setIsDropdownOpen(false); }}
+                                        className="w-full text-left px-4 py-3 text-xs font-bold text-zinc-300 hover:bg-indigo-500/20 hover:text-indigo-300 transition-colors border-b border-white/5 last:border-0"
+                                    >
+                                        {track}
+                                    </button>
+                                ))}
+                            </motion.div>
+                        )}
+                    </div>
+                </div>
+
+                <div className="bg-[#111] border border-white/5 rounded-3xl p-5 relative overflow-hidden shadow-lg">
+                    <div className="flex justify-between items-center mb-4">
+                        <div className="flex items-center gap-2">
+                            <Flame className="w-4 h-4 text-orange-500" />
+                            <span className="text-xs font-bold text-zinc-400 uppercase tracking-wider">Live Ghost Sprint</span>
+                        </div>
+                        <span className="text-[10px] font-bold bg-white/10 px-2 py-1 rounded-full text-zinc-300">Day {todayTask.day} Race</span>
+                    </div>
+                    <div className="flex items-center gap-4">
+                        <div className="h-10 w-10 rounded-full overflow-hidden bg-white/5 border border-white/10 shrink-0">
+                            <img src={`https://api.dicebear.com/7.x/bottts/svg?seed=Rival99`} alt="rival" className="w-full h-full object-cover" />
+                        </div>
+                        <div className="flex-1 space-y-2">
+                            <div className="flex justify-between items-end">
+                                <span className="text-sm font-bold text-white">ShadowCoder_99</span>
+                                <span className="text-[10px] text-zinc-500">Status: Compiling...</span>
+                            </div>
+                            <div className="h-2 w-full bg-black/50 rounded-full overflow-hidden border border-white/5 relative">
+                                <motion.div
+                                    animate={{ width: `${ghostProgress}%` }}
+                                    transition={{ duration: 1 }}
+                                    className="h-full bg-gradient-to-r from-orange-500 to-red-500 rounded-full shadow-[0_0_10px_rgba(249,115,22,0.5)]"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                    <p className="text-xs text-zinc-500 mt-4 text-center">Submit your challenge before they do to win a Sprint Badge!</p>
+                </div>
+
+                {student.achievements.length > 0 && (() => {
+                    let nextTier = "Tier II";
+                    let tierProgress = 0;
+                    if (currentDay < 15) {
+                        nextTier = "Tier II";
+                        tierProgress = Math.round((currentDay / 15) * 100);
+                    } else if (currentDay < 30) {
+                        nextTier = "Tier III";
+                        tierProgress = Math.round(((currentDay - 15) / 15) * 100);
+                    } else if (currentDay < 60) {
+                        nextTier = "Master Tier";
+                        tierProgress = Math.round(((currentDay - 30) / 30) * 100);
+                    } else {
+                        nextTier = "Max Level";
+                        tierProgress = 100;
+                    }
+
+                    return (
+                        <div className="space-y-3 pb-8">
+                            <div className="flex justify-between items-end mb-1">
+                                <h3 className="text-xs font-bold text-zinc-500 uppercase tracking-widest ml-1">Your Trophies</h3>
+                                <span className="text-[10px] font-bold text-indigo-400">{tierProgress}% to {nextTier}</span>
+                            </div>
+                            <div className="h-1.5 w-full bg-black/50 rounded-full overflow-hidden border border-white/5 relative mb-4">
+                                <motion.div 
+                                    initial={{ width: 0 }}
+                                    animate={{ width: `${tierProgress}%` }}
+                                    transition={{ duration: 1.5, delay: 0.5 }}
+                                    className="h-full bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full"
+                                />
+                            </div>
+                            <div className="flex flex-wrap gap-2">
                             {student.achievements.map((badge, i) => (
                                 <span key={i} className="text-xs font-medium bg-white/5 border border-white/10 px-4 py-2 rounded-xl text-zinc-300 flex items-center gap-2">
                                     <Trophy className="w-3 h-3 text-yellow-500" /> {badge}
                                 </span>
                             ))}
-                        </div>
-                    </div>
-                )}
+                                </div>
+                            </div>
+                    );
+                })()}
             </motion.div>
 
             <AnimatePresence>
@@ -304,8 +539,8 @@ export default function Dashboard() {
                             />
                             
                             <div className="text-center relative z-10" style={{ transform: "translateZ(40px)" }}>
-                                <div className="w-24 h-24 mx-auto bg-indigo-500/20 rounded-full border-2 border-indigo-500 overflow-hidden shadow-[0_0_20px_rgba(99,102,241,0.5)] mb-4">
-                                    <img src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${student.name}`} alt="avatar" className="w-full h-full object-cover" />
+                                <div className="w-24 h-24 mx-auto rounded-full border-2 border-indigo-500 overflow-hidden shadow-[0_0_20px_rgba(99,102,241,0.5)] mb-4 bg-zinc-900 flex items-center justify-center">
+                                    <img src={`https://api.dicebear.com/7.x/micah/svg?seed=${student.name}&backgroundColor=transparent`} alt="avatar" className="w-full h-full object-cover scale-125 translate-y-1" />
                                 </div>
                                 <h2 className="text-2xl font-black text-white drop-shadow-md">{student.name}</h2>
                                 <p className="text-indigo-400 font-bold text-sm tracking-widest uppercase mt-1">HyperFusion Hacker</p>
