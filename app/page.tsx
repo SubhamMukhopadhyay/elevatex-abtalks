@@ -10,17 +10,20 @@ export default function Landing() {
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:14px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]"></div>
       
       <motion.div 
+        style={{ willChange: "transform, filter" }}
         animate={{ rotate: 360 }}
         transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
         className="absolute -top-[50%] -left-[50%] w-[200%] h-[200%] bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-indigo-500/10 via-purple-500/5 to-transparent blur-[80px] pointer-events-none"
       />
       
       <motion.div 
+        style={{ willChange: "transform, filter" }}
         animate={{ y: [0, -30, 0] }}
         transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
         className="absolute top-20 right-10 w-32 h-32 bg-indigo-500/20 rounded-full blur-[50px] pointer-events-none"
       />
       <motion.div 
+        style={{ willChange: "transform, filter" }}
         animate={{ y: [0, 30, 0] }}
         transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
         className="absolute bottom-40 left-10 w-32 h-32 bg-purple-500/20 rounded-full blur-[50px] pointer-events-none"
