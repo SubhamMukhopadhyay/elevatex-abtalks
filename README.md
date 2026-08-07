@@ -1,36 +1,27 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🚀 HyperFusion: ABTalks 60-Day Challenge
 
-## Getting Started
+Welcome to the future of student productivity. **HyperFusion** is a premium, mobile-first redesign of the ABTalks 60-Day Challenge platform. It was built specifically for Indian college students who code late at night, combining stunning cyberpunk aesthetics with scientifically proven productivity features.
 
-First, run the development server:
+## ✨ Thoughtful Gamification & Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Instead of just a boring checklist, we redesigned the experience to keep students genuinely addicted to building their streaks:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+*   🎧 **Night Owl Deck:** A built-in Pomodoro timer (25 min focus / 5 min rest) synced directly with a curated Lofi/Ambient audio player. Students can cross-fade between "Midnight Rain" or "Cyber Synth" while staying completely focused on their code.
+*   👻 **Live Ghost Sprint:** A psychological gamification tool. Students race against an automated "Ghost" on a live progress bar. If they don't submit their proof of work before the ghost finishes its compilation, they lose the day's Sprint Badge.
+*   🏆 **Tier Rankings:** Progress isn't just a number. Students climb through Tier II, Tier III, and Master ranks as they conquer the 60 days, unlocking new holographic profile elements.
+*   📱 **True Mobile-First Design:** Engineered specifically for 390px viewports (iPhone standard). Every modal, animation, and button was crafted for one-handed mobile use late at night.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🛠️ Technical Implementation
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+*   **Framework:** Next.js (React)
+*   **Styling:** Tailwind CSS (Custom dark-mode glassmorphism)
+*   **Animations:** Framer Motion (Spring physics, holographic tilts, and micro-interactions)
+*   **Data Architecture:** LocalStorage + JSON Mock Data (Fully compliant with Hackathon "Out of Scope" guidelines for DBs/Auth).
 
-## Learn More
+## 🚀 Route Map (Live Demo)
+1. `/` - The Landing Page (Trust & Motivation)
+2. `/dashboard` - Student Dashboard (Streaks & Night Owl Deck)
+3. `/day/12` - Challenge Submission (Proof of Work & Confetti)
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+*Built with passion during the ABTalks Hackathon by Team HyperFusion.*
