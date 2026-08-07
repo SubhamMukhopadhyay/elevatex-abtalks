@@ -1,0 +1,89 @@
+{
+    "student": {
+        "name": "Subham",
+        "currentStreak": 12,
+        "progressPercentage": 20,
+        "standing": "Top 10%",
+        "achievements": [
+            "Week 1 Warrior",
+            "Early Bird"
+        ]
+    },
+    "tasks": [
+        {
+            "day": 1,
+            "title": "Hello Next.js",
+            "description": "Initialize a new Next.js project and deploy it to Vercel."
+        },
+        {
+            "day": 2,
+            "title": "Styling with Tailwind",
+            "description": "Style your landing page using Tailwind CSS."
+        },
+        {
+            "day": 3,
+            "title": "Component Architecture",
+            "description": "Break down your landing page into reusable React components."
+        },
+        {
+            "day": 4,
+            "title": "Routing Basics",
+            "description": "Add multiple pages and navigate between them using the Link component."
+        },
+        {
+            "day": 5,
+            "title": "State Management",
+            "description": "Use the useState hook to manage a simple counter or toggle."
+        },
+        {
+            "day": 6,
+            "title": "Fetching Data",
+            "description": "Fetch data from a public API and display it in a list."
+        },
+        {
+            "day": 7,
+            "title": "Forms & Inputs",
+            "description": "Create a controlled form component that handles user input."
+        },
+        {
+            "day": 8,
+            "title": "Animation Basics",
+            "description": "Use Framer Motion to add simple enter/exit animations."
+        },
+        {
+            "day": 9,
+            "title": "Custom Hooks",
+            "description": "Extract logic into a custom reusable React hook."
+        },
+        {
+            "day": 10,
+            "title": "Dark Mode",
+            "description": "Implement a dark mode toggle using Tailwind's dark class."
+        },
+        {
+            "day": 11,
+            "title": "Context API",
+            "description": "Refactor props drilling by using React Context."
+        },
+        {
+            "day": 12,
+            "title": "Local Storage",
+            "description": "Persist user data across reloads using the browser's localStorage API."
+        },
+        {
+            "day": 13,
+            "title": "Dynamic Routing",
+            "description": "Create a dynamic route like /post/[id] that loads data based on the URL."
+        },
+        {
+            "day": 14,
+            "title": "API Routes",
+            "description": "Build a custom backend endpoint using Next.js Route Handlers."
+        },
+        {
+            "day": 15,
+            "title": "Authentication",
+            "description": "Add basic user login flow using NextAuth or a similar library."
+        }
+    ]
+}
