@@ -229,6 +229,15 @@ export default function Dashboard() {
                         {state.label}
                     </button>
                 ))}
+                <button
+                    onClick={() => {
+                        localStorage.removeItem("hyperfusion_student");
+                        window.location.reload();
+                    }}
+                    className="text-[10px] uppercase font-bold tracking-wider px-4 py-2 rounded-full transition-all text-red-500 hover:text-red-400 hover:bg-red-500/10"
+                >
+                    RESET
+                </button>
             </div>
         </div>
     );
