@@ -23,10 +23,10 @@ export default function Dashboard() {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [selectedTrack, setSelectedTrack] = useState("Lofi Beats to Code to");
     const tracksData: Record<string, string> = {
-        "Lofi Beats to Code to": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
-        "Midnight Rain": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
-        "Cyber Synth": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
-        "Cafe Ambience": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3"
+        "Lofi Beats to Code to": "/lofi.mp3",
+        "Midnight Rain": "/rain.mp3",
+        "Cyber Synth": "/synth.mp3",
+        "Cafe Ambience": "/cafe.mp3"
     };
     const tracks = Object.keys(tracksData);
     const audioRef = useRef<HTMLAudioElement | null>(null);

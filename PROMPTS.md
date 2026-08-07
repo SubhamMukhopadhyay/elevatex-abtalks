@@ -25,3 +25,7 @@
 ### Prompt 5 (Antigravity / Deployment)
 - **User:** Requested final review, Git initialization, GitHub push, and Vercel deployment.
 - **Assistant:** Verified code, updated PROMPTS.md, initialized Git, committed changes, and provided Vercel deployment steps.
+
+### Prompt 6 (Antigravity / Hackathon Compliance & Audio Fixes)
+- **User:** Shared strict hackathon rules regarding AI Usage Logs (Stage 1/2 Authenticity Review), Edge Cases, and reported CDN audio link errors (CORS/403 blocks).
+- **Assistant:** Restored deleted AI Usage Logs to comply with Authenticity requirements. Validated the 390px mobile-first constraints. Re-wrote the Pomodoro Audio Logic to pull from local `/public` paths to permanently eliminate external CDN hotlink issues. Wrote a final highly-polished `README.md` to guarantee a strong first impression for judges. Verified 18-commit local Git history as proof of genuine development.
