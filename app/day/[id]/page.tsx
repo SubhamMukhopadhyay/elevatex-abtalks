@@ -38,7 +38,7 @@ export default function ChallengeDay({ params }: { params: Promise<{ id: string 
             setSubmitted(true);
             
             // Save progress to local storage
-            const savedData = JSON.parse(localStorage.getItem("hyperfusion_student") || "{}");
+            const savedData = JSON.parse(localStorage.getItem("elevatex_student") || "{}");
             const completedDays = savedData.completedDays || [];
             
             if (!completedDays.includes(dayId)) {
@@ -46,7 +46,7 @@ export default function ChallengeDay({ params }: { params: Promise<{ id: string 
                 const currentStreak = savedData.student ? savedData.student.currentStreak + 1 : data.student.currentStreak + 1;
                 const progressPercentage = Math.min(100, Math.round((completedDays.length / 60) * 100));
                 
-                localStorage.setItem("hyperfusion_student", JSON.stringify({
+                localStorage.setItem("elevatex_student", JSON.stringify({
                     ...savedData,
                     student: {
                         ...(savedData.student || data.student),
