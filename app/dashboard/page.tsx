@@ -74,18 +74,26 @@ export default function Dashboard() {
 
                 <div className="space-y-4">
                     <div className="grid grid-cols-2 gap-4">
-                        <div className="bg-white/5 border border-white/10 rounded-2xl p-4 flex flex-col items-center justify-center relative overflow-hidden">
+                        <motion.div 
+                            whileHover={{ scale: 1.03 }}
+                            whileTap={{ scale: 0.95, rotate: [0, -3, 3, -3, 0] }}
+                            className="bg-white/5 border border-white/10 rounded-2xl p-4 flex flex-col items-center justify-center relative overflow-hidden cursor-default shadow-lg"
+                        >
                             <div className="absolute top-0 right-0 w-16 h-16 bg-orange-500/10 rounded-full blur-xl"></div>
                             <Flame className={`w-8 h-8 mb-2 z-10 ${student.currentStreak > 0 ? "text-orange-500" : "text-zinc-600"}`} />
                             <span className="text-2xl font-black z-10">{student.currentStreak}</span>
                             <span className="text-[10px] text-zinc-400 uppercase tracking-widest font-bold mt-1 z-10">Day Streak</span>
-                        </div>
-                        <div className="bg-white/5 border border-white/10 rounded-2xl p-4 flex flex-col items-center justify-center relative overflow-hidden">
+                        </motion.div>
+                        <motion.div 
+                            whileHover={{ scale: 1.03 }}
+                            whileTap={{ scale: 0.95, rotate: [0, -3, 3, -3, 0] }}
+                            className="bg-white/5 border border-white/10 rounded-2xl p-4 flex flex-col items-center justify-center relative overflow-hidden cursor-default shadow-lg"
+                        >
                             <div className="absolute top-0 right-0 w-16 h-16 bg-indigo-500/10 rounded-full blur-xl"></div>
                             <Trophy className="w-8 h-8 mb-2 z-10 text-yellow-400" />
                             <span className="text-2xl font-black z-10">{student.achievements.length}</span>
                             <span className="text-[10px] text-zinc-400 uppercase tracking-widest font-bold mt-1 z-10">Badges</span>
-                        </div>
+                        </motion.div>
                     </div>
 
                     <div className="bg-white/5 border border-white/10 rounded-2xl p-4">
@@ -149,7 +157,13 @@ export default function Dashboard() {
                         <p className="text-sm text-zinc-400 leading-relaxed">{todayTask.description}</p>
                     </div>
                     <Link href={`/day/${todayTask.day}`} className="block w-full relative z-10">
-                        <button className="w-full bg-white text-black hover:bg-zinc-200 py-3.5 rounded-xl font-bold text-sm transition-all shadow-lg">Open Today's Challenge</button>
+                        <motion.button 
+                            whileHover={{ scale: 1.02 }}
+                            whileTap={{ scale: 0.95, rotate: [0, -2, 2, -2, 0] }}
+                            className="w-full bg-white text-black hover:bg-zinc-200 py-3.5 rounded-xl font-bold text-sm shadow-[0_0_15px_rgba(255,255,255,0.2)]"
+                        >
+                            Open Today's Challenge
+                        </motion.button>
                     </Link>
                 </div>
 
@@ -223,15 +237,6 @@ export default function Dashboard() {
                         {state.label}
                     </button>
                 ))}
-                <button
-                    onClick={() => {
-                        localStorage.removeItem("hyperfusion_student");
-                        window.location.reload();
-                    }}
-                    className="text-[10px] uppercase font-bold tracking-wider px-4 py-2 rounded-full transition-all text-red-500 hover:text-red-400 hover:bg-red-500/10"
-                >
-                    RESET
-                </button>
             </div>
         </div>
     );

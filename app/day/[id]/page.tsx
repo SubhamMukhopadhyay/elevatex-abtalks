@@ -120,10 +120,12 @@ export default function ChallengeDay({ params }: { params: Promise<{ id: string 
                         </div>
 
                         <div className="pt-6">
-                            <button
+                            <motion.button
+                                whileHover={{ scale: 1.02, boxShadow: "0px 0px 20px rgba(99,102,241,0.4)" }}
+                                whileTap={{ scale: 0.95, rotate: [0, -2, 2, -2, 0] }}
                                 type="submit"
                                 disabled={isSubmitting}
-                                className="w-full bg-indigo-500 hover:bg-indigo-600 disabled:bg-indigo-500/50 text-white py-4 rounded-xl font-bold text-[15px] transition-all shadow-[0_0_20px_rgba(99,102,241,0.3)] flex justify-center items-center"
+                                className="w-full bg-indigo-500 hover:bg-indigo-600 disabled:bg-indigo-500/50 text-white py-4 rounded-xl font-bold text-[15px] shadow-[0_0_20px_rgba(99,102,241,0.3)] flex justify-center items-center"
                             >
                                 {isSubmitting ? (
                                     <span className="flex items-center gap-2">
@@ -133,7 +135,7 @@ export default function ChallengeDay({ params }: { params: Promise<{ id: string 
                                 ) : (
                                     "Submit Proof of Work"
                                 )}
-                            </button>
+                            </motion.button>
                         </div>
                     </form>
                 ) : (
@@ -142,9 +144,13 @@ export default function ChallengeDay({ params }: { params: Promise<{ id: string 
                         <h3 className="text-xl font-bold text-emerald-400">Submission Accepted!</h3>
                         <p className="text-sm text-emerald-400/70 leading-relaxed">Your proof of work has been recorded. Your streak is safe.</p>
                         <Link href="/dashboard" className="block pt-6">
-                            <button className="w-full bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 py-3.5 rounded-xl font-bold text-sm transition-all border border-emerald-500/30">
+                            <motion.button 
+                                whileHover={{ scale: 1.02 }}
+                                whileTap={{ scale: 0.95, rotate: [0, -2, 2, -2, 0] }}
+                                className="w-full bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 py-3.5 rounded-xl font-bold text-sm border border-emerald-500/30 shadow-[0_0_15px_rgba(16,185,129,0.1)]"
+                            >
                                 Return to Dashboard
-                            </button>
+                            </motion.button>
                         </Link>
                     </motion.div>
                 )}

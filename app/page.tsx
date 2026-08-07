@@ -25,9 +25,15 @@ export default function Landing() {
 
         <div className="pt-8 space-y-4 w-full">
           <Link href="/dashboard" className="block w-full">
-            <button className="w-full bg-indigo-500 hover:bg-indigo-600 text-white py-4 rounded-xl font-bold text-[15px] transition-all shadow-[0_0_20px_rgba(99,102,241,0.3)]">
-              Start Your Journey
-            </button>
+            <motion.button 
+              whileHover={{ scale: 1.03, boxShadow: "0px 0px 30px rgba(99,102,241,0.5)" }}
+              whileTap={{ scale: 0.95, rotate: [0, -3, 3, -3, 0] }}
+              transition={{ duration: 0.3 }}
+              className="w-full bg-indigo-500 text-white py-4 rounded-xl font-bold text-[15px] shadow-[0_0_20px_rgba(99,102,241,0.3)] relative overflow-hidden group"
+            >
+              <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+              <span className="relative z-10">Start Your Journey</span>
+            </motion.button>
           </Link>
           <p className="text-xs text-zinc-500 font-medium">Join thousands of Indian college students.</p>
         </div>
