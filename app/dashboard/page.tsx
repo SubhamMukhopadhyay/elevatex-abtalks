@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
@@ -65,7 +65,7 @@ export default function Dashboard() {
             window.scrollTo(0, 0);
         }, 50);
 
-        const savedData = localStorage.getItem("hyperfusion_student");
+        const savedData = localStorage.getItem("Elevatex_student");
         if (savedData) {
             const parsed = JSON.parse(savedData);
             if (parsed.student) setStudentState(parsed.student);
@@ -163,8 +163,8 @@ export default function Dashboard() {
     const handleUseFreeze = () => {
         setFreezeUsed(true);
         setIsFreezeModalOpen(false);
-        const savedData = JSON.parse(localStorage.getItem("hyperfusion_student") || "{}");
-        localStorage.setItem("hyperfusion_student", JSON.stringify({ ...savedData, freezeUsed: true }));
+        const savedData = JSON.parse(localStorage.getItem("Elevatex_student") || "{}");
+        localStorage.setItem("Elevatex_student", JSON.stringify({ ...savedData, freezeUsed: true }));
     };
 
     const isDev = process.env.NODE_ENV === 'development';
@@ -555,7 +555,7 @@ export default function Dashboard() {
                                     <img src={`https://api.dicebear.com/7.x/micah/svg?seed=${student.name}&backgroundColor=transparent`} alt="avatar" className="w-full h-full object-cover scale-125 translate-y-1" />
                                 </div>
                                 <h2 className="text-2xl font-black text-white drop-shadow-md">{student.name}</h2>
-                                <p className="text-indigo-400 font-bold text-sm tracking-widest uppercase mt-1">HyperFusion Hacker</p>
+                                <p className="text-indigo-400 font-bold text-sm tracking-widest uppercase mt-1">Elevatex Hacker</p>
                             </div>
 
                             <div className="grid grid-cols-2 gap-4 mt-8 relative z-10" style={{ transform: "translateZ(20px)" }}>

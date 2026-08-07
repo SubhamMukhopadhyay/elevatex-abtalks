@@ -1,4 +1,4 @@
-# AI Prompt Logs - Team HyperFusion
+﻿# AI Prompt Logs - Team Elevatex
 
 ## Tools Used
 - Google Gemini (Initial scaffolding, UI design, layout planning)
@@ -15,8 +15,8 @@
 - **Assistant:** Provided fix commands (`npm install canvas-confetti @types/canvas-confetti`) and added `suppressHydrationWarning`.
 
 ### Prompt 3 (Antigravity / Local Setup)
-- **User:** Switched folder structure to HyperFusion and prepared for deployment.
-- **Assistant:** Guided git initialization, repository naming (`hyperfusion-abtalks`), and deployment verification steps.
+- **User:** Switched folder structure to Elevatex and prepared for deployment.
+- **Assistant:** Guided git initialization, repository naming (`Elevatex-abtalks`), and deployment verification steps.
 
 ### Prompt 4 (Antigravity / UX Refinement)
 - **User:** Noticed scroll restoration bug with Next.js router and requested merging a teammate's gamification UI concepts (Night Owl Deck, Ghost Sprint, Tier Rankings, ASCII Avatar).
