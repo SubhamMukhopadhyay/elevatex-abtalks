@@ -26,15 +26,9 @@ export default function Dashboard() {
             const maxCompleted = parsed.completedDays?.length ? Math.max(...parsed.completedDays) : 0;
             setCurrentDay(maxCompleted + 1 > 60 ? 60 : maxCompleted + 1);
         } else {
-            // Initialize for new user
-            const initialState = {
-                ...data.student,
-                currentStreak: 0,
-                progressPercentage: 0,
-                achievements: []
-            };
-            setStudentState(initialState);
-            setCurrentDay(1);
+            // Initialize for new user using default mock data
+            setStudentState(data.student);
+            setCurrentDay(data.student.currentStreak > 0 ? data.student.currentStreak : 1);
         }
     }, []);
 
