@@ -11,12 +11,10 @@ export default function Landing() {
       {/* Binary Background Texture */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-50 md:opacity-60">
         {[...Array(15)].map((_, i) => (
-          <motion.div
+          <div
             key={i}
             className="absolute top-0 flex flex-col font-mono font-bold text-purple-400/30 text-[14px] leading-[2.5]"
             style={{ left: `${i * 7}%` }}
-            animate={{ y: i % 2 === 0 ? ["0%", "-50%"] : ["-50%", "0%"] }}
-            transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
           >
             <div className="whitespace-pre text-center">
               0{"\n"}1{"\n"}0{"\n"}1{"\n"}0{"\n"}1{"\n"}0{"\n"}1{"\n"}0{"\n"}1{"\n"}0{"\n"}1{"\n"}0{"\n"}1{"\n"}0{"\n"}1
@@ -24,7 +22,7 @@ export default function Landing() {
             <div className="whitespace-pre text-center">
               0{"\n"}1{"\n"}0{"\n"}1{"\n"}0{"\n"}1{"\n"}0{"\n"}1{"\n"}0{"\n"}1{"\n"}0{"\n"}1{"\n"}0{"\n"}1{"\n"}0{"\n"}1
             </div>
-          </motion.div>
+          </div>
         ))}
       </div>
       
@@ -39,16 +37,10 @@ export default function Landing() {
         </div>
       </div>
 
-      <motion.div 
-        style={{ willChange: "transform, filter" }}
-        animate={{ y: [0, -20, 0] }}
-        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+      <div 
         className="absolute top-20 right-0 w-40 h-40 bg-purple-600/20 rounded-full blur-[60px] pointer-events-none"
       />
-      <motion.div 
-        style={{ willChange: "transform, filter" }}
-        animate={{ y: [0, 20, 0] }}
-        transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
+      <div 
         className="absolute bottom-20 left-0 w-40 h-40 bg-indigo-600/20 rounded-full blur-[60px] pointer-events-none"
       />
 
