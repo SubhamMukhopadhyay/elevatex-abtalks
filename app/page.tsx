@@ -119,9 +119,9 @@ export default function Landing() {
             
             <div className="flex items-center justify-center md:justify-start gap-4">
                 <div className="flex -space-x-3">
-                    <img src="https://api.dicebear.com/7.x/notionists/svg?seed=John&backgroundColor=transparent" className="w-9 h-9 rounded-full border-2 border-[#050505] bg-black" alt="student" />
-                    <img src="https://api.dicebear.com/7.x/notionists/svg?seed=Sarah&backgroundColor=transparent" className="w-9 h-9 rounded-full border-2 border-[#050505] bg-black" alt="student" />
-                    <img src="https://api.dicebear.com/7.x/notionists/svg?seed=Mike&backgroundColor=transparent" className="w-9 h-9 rounded-full border-2 border-[#050505] bg-black" alt="student" />
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=John&backgroundColor=transparent" className="w-9 h-9 rounded-full border-2 border-[#050505] bg-black" alt="student" />
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Sarah&backgroundColor=transparent" className="w-9 h-9 rounded-full border-2 border-[#050505] bg-black" alt="student" />
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Mike&backgroundColor=transparent" className="w-9 h-9 rounded-full border-2 border-[#050505] bg-black" alt="student" />
                 </div>
                 <div className="flex flex-col text-left">
                   <p className="text-[10px] text-white font-bold uppercase tracking-wider leading-tight">
