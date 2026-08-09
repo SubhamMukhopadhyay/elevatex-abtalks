@@ -56,9 +56,9 @@ export default function Landing() {
           </div>
         </div>
 
-        {/* Hero Typography - Left Aligned, Tight tracking, Solid Purple, Extra Bold */}
+        {/* Hero Typography */}
         <div className="space-y-4 w-full text-left">
-          <h1 className="text-[3rem] font-black leading-[1.0] tracking-tighter">
+          <h1 className="text-4xl md:text-[3rem] font-bold leading-tight tracking-tight">
             <span className="text-white block">The 60-Day</span>
             <span className="text-[#d87aff] block">Coding Challenge</span>
           </h1>
