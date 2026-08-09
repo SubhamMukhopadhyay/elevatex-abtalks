@@ -26,3 +26,8 @@ Instead of just a boring checklist, we redesigned the experience to keep student
 
 ---
 *Built with passion during the ABTalks Hackathon by Team Elevatex.*
+
+## ⚡ Recent Updates & Optimizations
+- **Android Performance Fix:** Removed `backdrop-blur` CSS properties from all modals (`/dashboard` and `/day/[id]`) to resolve heavy lag and stuttering on mobile devices, while preserving desktop layout styling.
+- **Typography Precision:** Enforced strict text wrapping prevention (`whitespace-nowrap`, `flex-col`) on the Hero section to ensure it remains beautifully split across two lines on any mobile device.
+- **Scroll Lock Integration:** Implemented background scroll locking when the Profile and Streak Freeze modals are active on mobile.
