@@ -20,19 +20,19 @@ export default function ChallengeDay({ params }: { params: Promise<{ id: string 
     const dayId = parseInt(id, 10);
     const router = useRouter();
 
-    const [todayTask, setTodayTask] = useState(data.tasks.find(t => t.day === dayId) || data.tasks[0]);
+    const getInitialTask = () => {
+        const found = data.tasks.find(t => t.day === dayId);
+        if (found) return found;
+        return {
+            day: dayId,
+            title: `Challenge Day ${dayId}`,
+            description: "This is a placeholder for future challenges. Implement your feature and submit the proof of work."
+        };
+    };
+
+    const [todayTask, setTodayTask] = useState(getInitialTask());
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitted, setSubmitted] = useState(false);
-
-    useEffect(() => {
-        if (!data.tasks.find(t => t.day === dayId)) {
-            setTodayTask({
-                day: dayId,
-                title: `Challenge Day ${dayId}`,
-                description: "This is a placeholder for future challenges. Implement your feature and submit the proof of work."
-            });
-        }
-    }, [dayId]);
 
     const handleRunTests = () => {
         setIsSubmitting(true);
@@ -85,7 +85,11 @@ export default function ChallengeDay({ params }: { params: Promise<{ id: string 
             </div>
 
             {/* Content */}
-            <div className="px-5 md:px-12 pb-8 flex-1 overflow-y-auto">
+            <motion.div 
+                initial={{ opacity: 0, y: 15 }} 
+                animate={{ opacity: 1, y: 0 }} 
+                className="px-5 md:px-12 pb-8 flex-1 overflow-y-auto"
+            >
                <div className="md:flex md:gap-16 md:items-start">
                   {/* Left Column */}
                   <div className="md:flex-1 md:max-w-lg">
@@ -202,7 +206,7 @@ export default function ChallengeDay({ params }: { params: Promise<{ id: string 
                 </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
         </div>
 
             {/* Success Overlay Modal */}
