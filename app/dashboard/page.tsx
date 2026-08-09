@@ -2,7 +2,7 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { Flame, Trophy, Snowflake, AlertTriangle, ChevronLeft, ChevronRight, Headphones, Play, Pause, RotateCcw, CloudRain, Sparkles, Coffee } from "lucide-react";
+import { Flame, Trophy, Snowflake, AlertTriangle, ChevronLeft, ChevronRight, ArrowRight, Headphones, Play, Pause, RotateCcw, CloudRain, Sparkles, Coffee } from "lucide-react";
 import { useRouter } from "next/navigation";
 import data from "../../data.json";
 
@@ -170,15 +170,16 @@ export default function Dashboard() {
     const isDev = process.env.NODE_ENV === 'development';
 
     return (
-        <div suppressHydrationWarning className="min-h-screen bg-[#050505] text-white p-6 mx-auto w-full max-w-[390px] font-sans relative pb-24 overflow-x-hidden overflow-y-auto">
-            <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
+        <div suppressHydrationWarning className="min-h-screen bg-[#050505] text-white font-sans relative pb-24 overflow-x-hidden overflow-y-auto w-full">
+            <div className="mx-auto w-full px-6 py-6 md:px-12 md:py-10 lg:px-24 lg:py-12">
+            <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} className="space-y-6 md:space-y-10">
 
                 {/* Header Section */}
                 <div className="flex justify-between items-start pt-2">
                     <div className="flex flex-col gap-3">
-                        <Link href="/" className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 transition-colors text-zinc-400">
+                        <button onClick={() => router.back()} className="inline-flex items-center justify-center w-8 h-8 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 transition-colors text-zinc-400 cursor-pointer">
                             <ChevronLeft className="w-5 h-5 pr-0.5" />
-                        </Link>
+                        </button>
                         <div>
                             <p className="text-zinc-400 text-[13px] font-medium leading-tight">Welcome back,</p>
                             <h1 className="text-[28px] font-bold text-white tracking-tight flex items-center gap-2 mt-0.5">
@@ -189,7 +190,7 @@ export default function Dashboard() {
                     {/* Interactive Avatar */}
                     <div className="relative w-14 h-14 rounded-full overflow-hidden bg-purple-900/40 border-2 border-purple-500/50 flex items-center justify-center group cursor-pointer shadow-[0_0_15px_rgba(168,85,247,0.3)] shrink-0" onClick={() => setIsCardModalOpen(true)}>
                         {!isDecoded ? (
-                            <div className="text-[6px] leading-[6px] font-mono text-purple-400 whitespace-pre text-center animate-pulse">
+                            <div suppressHydrationWarning className="text-[6px] leading-[6px] font-mono text-purple-400 whitespace-pre text-center animate-pulse">
                                 {asciiFrames[asciiFrame]}
                             </div>
                         ) : (
@@ -319,7 +320,9 @@ export default function Dashboard() {
                     </div>
                 )}
 
-                {/* Active Challenge Card */}
+                  {/* MAIN DASHBOARD CONTENT (GRID ON DESKTOP) */}
+                  <div className="space-y-4 md:space-y-0 md:grid md:grid-cols-2 md:gap-6">
+                      {/* Active Challenge Card */}
                 <motion.div 
                     className="bg-[#0a0a0a] border border-white/5 rounded-3xl p-5 shadow-lg"
                 >
@@ -328,16 +331,14 @@ export default function Dashboard() {
                         <span className="text-[10px] font-bold text-zinc-500">Top 10%</span>
                     </div>
                     
-                    <h2 className="text-lg font-bold text-white mb-4">Local Storage</h2>
+                    <h2 className="text-lg font-bold text-white mb-4">{todayTask.title}</h2>
                     
-
-
                     <Link href={`/day/${todayTask.day}`} className="block w-full">
                         <motion.button 
                             whileTap={{ scale: 0.97 }}
-                            className="w-full bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white py-3.5 rounded-xl font-bold text-[14px] shadow-[0_0_20px_rgba(168,85,247,0.3)] flex justify-center items-center gap-2"
+                            className="w-full bg-gradient-to-r from-[#421cf8] to-[#ed3f7a] text-white py-3.5 rounded-xl font-bold text-[14px] shadow-[0_0_20px_rgba(237,63,122,0.3)] flex justify-center items-center gap-2 cursor-pointer"
                         >
-                            Open Today's Challenge <ChevronRight className="w-4 h-4" />
+                            Open Today's Challenge <ArrowRight className="w-4 h-4" />
                         </motion.button>
                     </Link>
                 </motion.div>
@@ -360,13 +361,13 @@ export default function Dashboard() {
                         <div className="flex gap-3">
                             <button 
                                 onClick={() => setTimerActive(!timerActive)}
-                                className="h-12 w-12 rounded-full bg-blue-600 text-white flex items-center justify-center hover:bg-blue-700 transition-all shadow-[0_0_15px_rgba(37,99,235,0.4)]"
+                                className="h-12 w-12 rounded-full bg-blue-600 text-white flex items-center justify-center hover:bg-blue-700 transition-all shadow-[0_0_15px_rgba(37,99,235,0.4)] cursor-pointer"
                             >
                                 {timerActive ? <Pause className="w-5 h-5" /> : <Play className="w-5 h-5 ml-1" />}
                             </button>
                             <button 
                                 onClick={() => { setTimerActive(false); setSecondsLeft(25 * 60); }}
-                                className="h-12 w-12 rounded-full bg-white/5 text-zinc-400 flex items-center justify-center hover:bg-white/10 transition-all border border-white/5"
+                                className="h-12 w-12 rounded-full bg-white/5 text-zinc-400 flex items-center justify-center hover:bg-white/10 transition-all border border-white/5 cursor-pointer"
                             >
                                 <RotateCcw className="w-5 h-5" />
                             </button>
@@ -376,7 +377,7 @@ export default function Dashboard() {
                     <div className="relative">
                         <button 
                             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                            className={`w-full bg-black border ${isDropdownOpen ? 'border-white/10 rounded-t-xl rounded-b-none' : 'border-transparent rounded-xl'} p-4 text-[13px] font-medium text-zinc-300 outline-none flex justify-between items-center transition-all z-20 relative`}
+                            className={`w-full bg-black border ${isDropdownOpen ? 'border-white/10 rounded-t-xl rounded-b-none' : 'border-transparent rounded-xl'} p-4 text-[13px] font-medium text-zinc-300 outline-none flex justify-between items-center transition-all z-20 relative cursor-pointer`}
                         >
                             <span className="flex items-center">{getTrackIcon(selectedTrack)} {selectedTrack}</span>
                             <ChevronLeft className={`w-4 h-4 text-zinc-500 transition-transform ${isDropdownOpen ? 'rotate-90' : '-rotate-90'}`} />
@@ -393,7 +394,7 @@ export default function Dashboard() {
                                         <button
                                             key={i}
                                             onClick={() => { setSelectedTrack(track); setIsDropdownOpen(false); }}
-                                            className="w-full flex items-center text-left px-4 py-3.5 text-[13px] font-medium text-zinc-400 hover:text-white transition-colors"
+                                            className="w-full flex items-center text-left px-4 py-3.5 text-[13px] font-medium text-zinc-400 hover:text-white transition-colors cursor-pointer"
                                         >
                                             {getTrackIcon(track)} {track}
                                         </button>
@@ -403,6 +404,8 @@ export default function Dashboard() {
                         )}
                     </div>
                 </div>
+                  {/* End of Main Content Grid */}
+                  </div>
 
                 {/* Live Ghost Sprint */}
                 <div className="bg-[#0a0a0a] border border-white/5 rounded-3xl p-5 shadow-lg">
@@ -448,15 +451,15 @@ export default function Dashboard() {
                                         initial={{ width: 0 }}
                                         animate={{ width: '80%' }}
                                         transition={{ duration: 1.5, delay: 0.5 }}
-                                        className="h-full bg-gradient-to-r from-blue-600 to-purple-500 rounded-full"
+                                        className="h-full bg-gradient-to-r from-[#421cf8] to-[#ed3f7a] rounded-full"
                                     />
                                 </div>
-                                <div className="flex flex-wrap gap-2">
-                                    <span className="text-[11px] font-bold bg-transparent border border-white/10 px-3 py-1.5 rounded-full text-zinc-300 flex items-center gap-1.5">
-                                        <Trophy className="w-3 h-3 text-yellow-500" /> Week 1 Warrior
+                                <div className="flex flex-wrap gap-3">
+                                    <span className="text-[11px] font-bold bg-[#111] border border-white/5 px-3 py-2.5 rounded-xl text-zinc-300 flex items-center gap-1.5 shadow-sm">
+                                        <Trophy className="w-3.5 h-3.5 text-yellow-500" /> Week 1 Warrior
                                     </span>
-                                    <span className="text-[11px] font-bold bg-transparent border border-white/10 px-3 py-1.5 rounded-full text-zinc-300 flex items-center gap-1.5">
-                                        <Trophy className="w-3 h-3 text-yellow-500" /> Early Bird
+                                    <span className="text-[11px] font-bold bg-[#111] border border-white/5 px-3 py-2.5 rounded-xl text-zinc-300 flex items-center gap-1.5 shadow-sm">
+                                        <Trophy className="w-3.5 h-3.5 text-yellow-500" /> Early Bird
                                     </span>
                                 </div>
                             </div>
@@ -464,6 +467,7 @@ export default function Dashboard() {
                     })()}
                 </div>
             </motion.div>
+        </div>
 
             {/* Profile Modal */}
             <AnimatePresence>
@@ -474,38 +478,42 @@ export default function Dashboard() {
                             animate={{ opacity: 1, scale: 1 }}
                             exit={{ opacity: 0, scale: 0.95 }}
                             transition={{ duration: 0.2 }}
-                            onClick={(e) => e.stopPropagation()}
-                            className="bg-[#0a0a0a] border border-white/10 rounded-[32px] p-8 w-full max-w-[340px] shadow-2xl relative overflow-hidden"
+                            className="w-full max-w-[340px] md:max-w-2xl relative"
                         >
-                            <div className="text-center relative z-10 flex flex-col items-center">
-                                <div className="w-24 h-24 rounded-full border-2 border-purple-500/50 overflow-hidden shadow-[0_0_20px_rgba(168,85,247,0.4)] mb-5 bg-purple-900/30 flex items-center justify-center p-2">
-                                    <img src={`https://api.dicebear.com/7.x/bottts/svg?seed=${student.name}&backgroundColor=transparent`} alt="avatar" className="w-full h-full object-cover scale-110" />
+                            <div 
+                                onClick={(e) => e.stopPropagation()}
+                                className="bg-[#0a0a0a] border border-white/10 rounded-[32px] p-8 shadow-2xl relative overflow-hidden"
+                            >
+                                <div className="text-center relative z-10 flex flex-col items-center">
+                                    <div className="w-28 h-28 rounded-full border-[3px] border-[#a855f7] overflow-hidden shadow-[0_0_30px_rgba(168,85,247,0.5)] mb-4 bg-purple-900/30 flex items-center justify-center p-2">
+                                        <img src={`https://api.dicebear.com/7.x/bottts/svg?seed=${student.name}&backgroundColor=transparent`} alt="avatar" className="w-full h-full object-cover scale-110" />
+                                    </div>
+                                    <h2 className="text-[28px] font-bold text-white tracking-tight">{student.name}</h2>
+                                    <p className="text-[#c084fc] font-semibold text-[11px] tracking-[0.2em] uppercase mt-1">Elevatex Hacker</p>
                                 </div>
-                                <h2 className="text-[28px] font-bold text-white tracking-tight">{student.name}</h2>
-                                <p className="text-purple-400 font-bold text-[11px] tracking-[0.2em] uppercase mt-1">Elevatex Hacker</p>
+
+                                <div className="flex gap-3 mt-6 relative z-10 justify-center">
+                                    <div className="flex flex-col items-center flex-1 bg-[#101010] border border-white/5 rounded-2xl py-4 shadow-sm">
+                                        <Flame className="w-6 h-6 mb-2 text-orange-500" strokeWidth={1.5} />
+                                        <div className="text-[24px] font-bold text-white leading-none">{student.currentStreak}</div>
+                                        <div className="text-[10px] text-zinc-400 uppercase tracking-widest font-bold mt-1.5">Day Streak</div>
+                                    </div>
+                                    <div className="flex flex-col items-center flex-1 bg-[#101010] border border-white/5 rounded-2xl py-4 shadow-sm">
+                                        <Trophy className="w-6 h-6 mb-2 text-yellow-500" strokeWidth={1.5} />
+                                        <div className="text-[24px] font-bold text-white leading-none">{student.achievements.length}</div>
+                                        <div className="text-[10px] text-zinc-400 uppercase tracking-widest font-bold mt-1.5">Badges</div>
+                                    </div>
+                                </div>
+                                
+                                <div className="mt-6 relative z-10">
+                                    <button className="w-full bg-[#382bf0] hover:bg-[#2f23d1] text-white py-3.5 rounded-xl font-medium text-[14px] flex justify-center items-center gap-2 transition-all cursor-pointer">
+                                        <div className="bg-white text-[#382bf0] rounded-[3px] p-0.5"><span className="font-serif text-[11px] px-1 font-bold leading-none">in</span></div>
+                                        Download for LinkedIn
+                                    </button>
+                                </div>
                             </div>
 
-                            <div className="flex gap-3 mt-6 relative z-10 justify-center">
-                                <div className="flex flex-col items-center flex-1 bg-[#101010] border border-white/5 rounded-2xl py-4 shadow-sm">
-                                    <Flame className="w-6 h-6 mb-2 text-orange-500" strokeWidth={1.5} />
-                                    <div className="text-[20px] font-bold text-white leading-none">{student.currentStreak}</div>
-                                    <div className="text-[9px] text-zinc-400 uppercase tracking-widest font-bold mt-1.5">Day Streak</div>
-                                </div>
-                                <div className="flex flex-col items-center flex-1 bg-[#101010] border border-white/5 rounded-2xl py-4 shadow-sm">
-                                    <Trophy className="w-6 h-6 mb-2 text-yellow-500" strokeWidth={1.5} />
-                                    <div className="text-[20px] font-bold text-white leading-none">{student.achievements.length}</div>
-                                    <div className="text-[9px] text-zinc-400 uppercase tracking-widest font-bold mt-1.5">Badges</div>
-                                </div>
-                            </div>
-                            
-                            <div className="mt-5 relative z-10">
-                                <button className="w-full bg-[#382bf0] hover:bg-[#2f23d1] text-white py-3.5 rounded-xl font-medium text-[14px] flex justify-center items-center gap-2 transition-all">
-                                    <div className="bg-white text-[#382bf0] rounded-[3px] p-0.5"><span className="font-serif text-[11px] px-1 font-bold leading-none">in</span></div>
-                                    Download for LinkedIn
-                                </button>
-                            </div>
-
-                            <div className="mt-8">
+                            <div className="mt-8 px-4">
                                 <div className="flex items-center gap-4 text-center">
                                     <div className="flex-1 h-px bg-white/5"></div>
                                     <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">About Me</span>
@@ -514,7 +522,7 @@ export default function Dashboard() {
                                 <p className="text-[12px] text-zinc-300 text-left mt-4 leading-relaxed font-medium">
                                     Just a builder who loves solving problems, shipping code, and learning in public.
                                 </p>
-                                <div className="flex justify-between mt-6 pt-6 text-center">
+                                <div className="flex justify-between mt-6 pt-6 text-center border-t border-white/5">
                                     <div className="flex-1 text-left">
                                         <div className="text-[9px] font-bold text-zinc-500 uppercase tracking-widest mb-1.5">Joined On</div>
                                         <div className="text-[13px] font-medium text-zinc-300">24 May 2024</div>
@@ -523,7 +531,7 @@ export default function Dashboard() {
                                     <div className="flex-1 text-left pl-6">
                                         <div className="text-[9px] font-bold text-zinc-500 uppercase tracking-widest mb-1.5">Country</div>
                                         <div className="text-[13px] font-medium text-zinc-300 flex items-center justify-start gap-1.5">
-                                            <span>🇮🇳</span> India
+                                            <span className="text-base">🇮🇳</span> India
                                         </div>
                                     </div>
                                 </div>
@@ -541,27 +549,27 @@ export default function Dashboard() {
                             initial={{ opacity: 0, scale: 0.9 }}
                             animate={{ opacity: 1, scale: 1 }}
                             exit={{ opacity: 0, scale: 0.9 }}
-                            className="bg-zinc-900 border border-white/10 rounded-3xl p-6 w-full max-w-[340px] shadow-2xl relative"
+                            className="bg-zinc-900 border border-white/10 rounded-3xl md:rounded-[2rem] p-6 md:p-8 md:pt-10 w-full max-w-[340px] md:max-w-[480px] shadow-2xl relative"
                         >
                             <div className="absolute -top-10 left-1/2 -translate-x-1/2 text-5xl drop-shadow-[0_0_15px_rgba(59,130,246,0.5)]">
-                                <Snowflake className="w-16 h-16 text-blue-400 bg-zinc-900 rounded-full p-2" />
+                                <Snowflake className="w-16 h-16 md:w-20 md:h-20 text-blue-400 bg-zinc-900 rounded-full p-2 md:p-3" />
                             </div>
-                            <div className="pt-6 text-center space-y-3">
-                                <h2 className="text-xl font-bold text-white">Use Streak Freeze?</h2>
-                                <p className="text-sm text-zinc-400 leading-relaxed">
+                            <div className="pt-6 md:pt-8 text-center space-y-3 md:space-y-4">
+                                <h2 className="text-xl md:text-2xl font-bold text-white">Use Streak Freeze?</h2>
+                                <p className="text-sm md:text-base text-zinc-400 leading-relaxed max-w-sm mx-auto">
                                     This will consume your token and protect your streak for 24 hours. You cannot undo this.
                                 </p>
                             </div>
-                            <div className="grid grid-cols-2 gap-3 mt-6">
+                            <div className="grid grid-cols-2 gap-3 md:gap-4 mt-6 md:mt-8">
                                 <button
                                     onClick={() => setIsFreezeModalOpen(false)}
-                                    className="py-3 rounded-xl font-bold text-sm bg-white/5 hover:bg-white/10 text-white transition-all"
+                                    className="py-3 md:py-4 rounded-xl font-bold text-sm md:text-base bg-white/5 hover:bg-white/10 text-white transition-all cursor-pointer"
                                 >
                                     Cancel
                                 </button>
                                 <button
                                     onClick={handleUseFreeze}
-                                    className="py-3 rounded-xl font-bold text-sm bg-blue-500 hover:bg-blue-600 text-white shadow-[0_0_15px_rgba(59,130,246,0.4)] transition-all"
+                                    className="py-3 md:py-4 rounded-xl font-bold text-sm md:text-base bg-blue-500 hover:bg-blue-600 text-white shadow-[0_0_15px_rgba(59,130,246,0.4)] transition-all cursor-pointer"
                                 >
                                     Confirm Use
                                 </button>
@@ -584,7 +592,7 @@ export default function Dashboard() {
                             setViewState(state.id);
                             setFreezeUsed(false);
                         }}
-                        className={`text-[11px] uppercase font-bold tracking-wide px-4 py-2.5 rounded-full transition-all ${
+                        className={`whitespace-nowrap text-[11px] uppercase font-bold tracking-wide px-4 py-2.5 rounded-full transition-all cursor-pointer ${
                             viewState === state.id 
                             ? "bg-[#2563eb] text-white shadow-[0_0_15px_rgba(37,99,235,0.4)]" 
                             : "bg-[#161616] text-zinc-400 hover:text-zinc-200"
