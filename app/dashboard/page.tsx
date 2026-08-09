@@ -525,7 +525,7 @@ export default function Dashboard() {
                                 <div className="flex justify-between mt-6 pt-6 text-center border-t border-white/5">
                                     <div className="flex-1 text-left">
                                         <div className="text-[9px] font-bold text-zinc-500 uppercase tracking-widest mb-1.5">Joined On</div>
-                                        <div className="text-[13px] font-medium text-zinc-300">24 May 2024</div>
+                                        <div className="text-[13px] font-medium text-zinc-300">9 August 2026</div>
                                     </div>
                                     <div className="w-px bg-white/5 h-8 self-center"></div>
                                     <div className="flex-1 text-left pl-6">
