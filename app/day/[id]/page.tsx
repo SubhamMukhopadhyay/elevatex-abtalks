@@ -71,35 +71,58 @@ export default function ChallengeDay({ params }: { params: Promise<{ id: string 
     };
 
     return (
-        <div suppressHydrationWarning className="min-h-screen bg-[#050505] text-white mx-auto w-full max-w-[390px] font-sans flex flex-col relative overflow-hidden">
+        <div suppressHydrationWarning className="min-h-screen bg-[#050505] text-white font-sans relative overflow-hidden flex flex-col w-full">
+            <div className="mx-auto w-full px-6 md:px-16 lg:px-24 flex flex-col flex-1">
             
             {/* Header */}
-            <div className="flex items-center px-5 pt-6 pb-4">
-                <div className="flex items-center gap-2 cursor-pointer text-zinc-300 hover:text-white" onClick={() => router.back()}>
-                    <ChevronLeft className="w-4 h-4" />
-                    <span className="font-medium text-[14px]">Back</span>
+            <div className="px-5 md:px-12 pt-8 pb-4 flex items-center justify-between z-10 relative">
+                <div 
+                    onClick={() => router.back()}
+                    className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 transition-colors text-zinc-400 cursor-pointer shadow-sm"
+                >
+                    <ChevronLeft className="w-5 h-5 pr-0.5" />
                 </div>
             </div>
 
             {/* Content */}
-            <div className="px-5 pb-8 flex-1 overflow-y-auto">
-                <div className="inline-block bg-purple-500/10 text-purple-400 text-[10px] font-bold px-2 py-1 rounded mb-4 tracking-wider">
-                    DAY {todayTask.day}
-                </div>
-                
-                <h1 className="text-[22px] font-bold text-white mb-6 tracking-tight">
-                    {todayTask.title}
-                </h1>
+            <div className="px-5 md:px-12 pb-8 flex-1 overflow-y-auto">
+               <div className="md:flex md:gap-16 md:items-start">
+                  {/* Left Column */}
+                  <div className="md:flex-1 md:max-w-lg">
+                      <div className="inline-block bg-purple-500/10 text-purple-400 text-[10px] font-bold px-2 py-1 rounded mb-4 tracking-wider">
+                          DAY {todayTask.day}
+                      </div>
+                      
+                      <h1 className="text-[22px] md:text-[32px] font-bold text-white mb-6 md:mb-8 tracking-tight">
+                          {todayTask.title}
+                      </h1>
+      
+                      {/* Info Card */}
+                      <div className="bg-[#0d0d12] border border-white/5 rounded-2xl p-5 mb-8">
+                          <h2 className="text-[14px] md:text-[16px] font-bold text-white mb-2 md:mb-3">What you need to build:</h2>
+                          <p className="text-[13px] md:text-[15px] text-zinc-400 leading-relaxed">
+                              {todayTask.description}
+                          </p>
+                      </div>
 
-                {/* Info Card */}
-                <div className="bg-[#0d0d12] border border-white/5 rounded-2xl p-5 mb-8">
-                    <h2 className="text-[14px] font-bold text-white mb-2">What you need to build:</h2>
-                    <p className="text-[13px] text-zinc-400 leading-relaxed">
-                        {todayTask.description}
-                    </p>
-                </div>
+                      {/* Illustration Space (Desktop Only) */}
+                      <div className="mt-8 mb-4 hidden md:flex justify-center items-center overflow-hidden">
+                          <img 
+                              src="/illustration.png" 
+                              alt="3D Folder Challenge" 
+                              className="w-96 h-auto object-cover"
+                              style={{
+                                  maskImage: 'radial-gradient(ellipse at center, black 40%, transparent 65%)',
+                                  WebkitMaskImage: 'radial-gradient(ellipse at center, black 40%, transparent 65%)',
+                                  transform: 'scale(1.1)'
+                              }}
+                          />
+                      </div>
+                  </div>
 
-                {/* Form Fields */}
+                  {/* Right Column */}
+                  <div className="md:flex-1 md:bg-[#0a0a0a]/80 md:border md:border-white/5 md:p-8 md:rounded-3xl md:shadow-xl md:backdrop-blur-sm mt-8 md:mt-0">
+                      {/* Form Fields */}
                 <div className="space-y-5">
                     <div>
                         <label className="block text-[10px] font-bold text-zinc-500 uppercase tracking-widest mb-2">
@@ -150,7 +173,7 @@ export default function ChallengeDay({ params }: { params: Promise<{ id: string 
                     whileTap={{ scale: 0.97 }}
                     onClick={handleRunTests}
                     disabled={isSubmitting || submitted}
-                    className="w-full bg-gradient-to-r from-blue-600 to-pink-500 text-white py-4 rounded-xl font-bold text-[15px] shadow-[0_0_20px_rgba(236,72,153,0.3)] flex justify-center items-center gap-2 transition-all relative overflow-hidden"
+                    className="w-full bg-gradient-to-r from-[#421cf8] to-[#ed3f7a] text-white py-4 rounded-xl font-bold text-[15px] flex justify-center items-center gap-2 transition-all relative overflow-hidden shadow-lg"
                 >
                     {isSubmitting ? (
                         <>
@@ -159,20 +182,28 @@ export default function ChallengeDay({ params }: { params: Promise<{ id: string 
                         </>
                     ) : (
                         <>
-                            Submit Proof of Work <ArrowRight className="w-5 h-5" />
+                            Submit Proof of Work <ArrowRight className="w-4 h-4" />
                         </>
                     )}
                 </motion.button>
                 
-                {/* Illustration Space */}
-                <div className="mt-12 flex justify-center items-center opacity-60">
-                    <div className="w-48 h-32 bg-gradient-to-t from-purple-900/30 to-transparent rounded-t-xl relative border-b border-purple-500/30 flex items-end justify-center pb-4">
-                        <div className="text-purple-400/50 text-sm font-bold flex flex-col items-center gap-2">
-                           <Check className="w-8 h-8 opacity-50" />
-                        </div>
-                    </div>
+                {/* Illustration Space (Mobile Only) */}
+                <div className="mt-8 mb-4 flex md:hidden justify-center items-center overflow-hidden">
+                    <img 
+                        src="/illustration.png" 
+                        alt="3D Folder Challenge" 
+                        className="w-72 h-auto object-cover"
+                        style={{
+                            maskImage: 'radial-gradient(ellipse at center, black 40%, transparent 65%)',
+                            WebkitMaskImage: 'radial-gradient(ellipse at center, black 40%, transparent 65%)',
+                            transform: 'scale(1.1)'
+                        }}
+                    />
                 </div>
+                </div>
+              </div>
             </div>
+        </div>
 
             {/* Success Overlay Modal */}
             <AnimatePresence>
@@ -189,7 +220,7 @@ export default function ChallengeDay({ params }: { params: Promise<{ id: string 
                             initial={{ scale: 0.8, opacity: 0, y: 20 }}
                             animate={{ scale: 1, opacity: 1, y: 0 }}
                             transition={{ type: "spring", stiffness: 200, damping: 20, delay: 0.1 }}
-                            className="text-center w-full max-w-[320px] relative z-10"
+                            className="text-center w-full max-w-[320px] md:max-w-md relative z-10"
                         >
                             {/* Checkmark icon */}
                             <div className="w-24 h-24 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-8 shadow-[0_0_40px_rgba(34,197,94,0.5)] border-4 border-black">
