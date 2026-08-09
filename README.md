@@ -10,6 +10,7 @@ Instead of just a boring checklist, we redesigned the experience to keep student
 *   👻 **Live Ghost Sprint:** A psychological gamification tool. Students race against an automated "Ghost" on a live progress bar. If they don't submit their proof of work before the ghost finishes its compilation, they lose the day's Sprint Badge.
 *   🏆 **Tier Rankings:** Progress isn't just a number. Students climb through Tier II, Tier III, and Master ranks as they conquer the 60 days, unlocking new holographic profile elements.
 *   📱 **True Mobile-First Design:** Engineered specifically for 390px viewports (iPhone standard). Every modal, animation, and button was crafted for one-handed mobile use late at night.
+*   🛡️ **Production-Ready & Polished:** Hydration warnings from browser extensions are suppressed, text-wrapping flex overflows are fixed for small screens, and the UX is completely fluid.
 
 ## 🛠️ Technical Implementation
 
