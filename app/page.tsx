@@ -58,9 +58,9 @@ export default function Landing() {
 
         {/* Hero Typography */}
         <div className="space-y-4 w-full text-left">
-          <h1 className="text-4xl md:text-[3rem] font-bold leading-tight tracking-tight">
+          <h1 className="text-[2.2rem] md:text-[3rem] font-black leading-[1.05] tracking-tighter">
             <span className="text-white block">The 60-Day</span>
-            <span className="text-[#d87aff] block">Coding Challenge</span>
+            <span className="text-[#d87aff] block mt-1">Coding Challenge</span>
           </h1>
           <p className="text-zinc-300 text-[15px] leading-relaxed font-medium pr-4">
             Pick a track, build something every day, and maintain a public learning streak to become visible to top recruiters.
