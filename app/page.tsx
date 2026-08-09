@@ -49,7 +49,7 @@ export default function Landing() {
       <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="flex-1 flex flex-col justify-center text-center space-y-6 z-10 w-full max-w-[500px] relative mt-12 mx-auto">
         
         {/* Exclusives Tag - Centered perfectly */}
-        <div className="flex justify-center w-full mb-2">
+        <div className="flex justify-center w-full mb-6">
           <div className="inline-flex items-center gap-2 bg-[#120824] border border-purple-500/30 px-3 py-1.5 rounded-full text-[10px] font-bold text-purple-300 uppercase tracking-widest shadow-[0_0_15px_rgba(168,85,247,0.15)]">
             <Zap className="w-3 h-3 text-purple-400 fill-purple-400" />
             ABTALKS EXCLUSIVES
@@ -58,9 +58,9 @@ export default function Landing() {
 
         {/* Hero Typography */}
         <div className="space-y-4 w-full text-left">
-          <h1 className="text-[12.5vw] sm:text-[3.5rem] font-black leading-[1.0] tracking-tighter">
-            <span className="text-white block">The 60-Day</span>
-            <span className="text-[#d87aff] block">Coding Challenge</span>
+          <h1 className="text-[2.8rem] md:text-[3.5rem] font-black leading-[1.0] tracking-tighter flex flex-col">
+            <span className="text-white whitespace-nowrap">The 60-Day</span>
+            <span className="text-[#d87aff] whitespace-nowrap mt-1">Coding Challenge</span>
           </h1>
           <p className="text-zinc-300 text-[15px] leading-relaxed font-medium pr-4">
             Pick a track, build something every day, and maintain a public learning streak to become visible to top recruiters.
