@@ -2,10 +2,18 @@
 import { useState, useEffect, use } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import confetti from "canvas-confetti";
-import { ChevronLeft } from "lucide-react";
+import { ChevronLeft, Play, Check, Flame, ShieldCheck, ArrowRight } from "lucide-react";
 import data from "../../../data.json";
+
+const GithubIcon = ({ className }: { className?: string }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/></svg>
+);
+
+const LinkedinIcon = ({ className }: { className?: string }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg>
+);
 
 export default function ChallengeDay({ params }: { params: Promise<{ id: string }> }) {
     const { id } = use(params);
@@ -13,13 +21,10 @@ export default function ChallengeDay({ params }: { params: Promise<{ id: string 
     const router = useRouter();
 
     const [todayTask, setTodayTask] = useState(data.tasks.find(t => t.day === dayId) || data.tasks[0]);
-    const [github, setGithub] = useState("");
-    const [linkedin, setLinkedin] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitted, setSubmitted] = useState(false);
 
     useEffect(() => {
-        // If the task wasn't found in our mock data (e.g. day > 15), fallback
         if (!data.tasks.find(t => t.day === dayId)) {
             setTodayTask({
                 day: dayId,
@@ -29,8 +34,7 @@ export default function ChallengeDay({ params }: { params: Promise<{ id: string 
         }
     }, [dayId]);
 
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
+    const handleRunTests = () => {
         setIsSubmitting(true);
 
         setTimeout(() => {
@@ -63,99 +67,171 @@ export default function ChallengeDay({ params }: { params: Promise<{ id: string 
                 origin: { y: 0.6 },
                 colors: ['#6366f1', '#a855f7', '#10b981']
             });
-        }, 1500);
+        }, 2000);
     };
 
     return (
-        <div suppressHydrationWarning className="min-h-screen bg-zinc-950 text-white p-6 mx-auto w-full max-w-[390px] border-x border-white/5 font-sans flex flex-col relative overflow-hidden">
-
-            <div className="absolute top-0 left-0 w-full h-64 bg-indigo-500/5 blur-[100px] pointer-events-none"></div>
-
-            <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="flex-1 space-y-6 pt-4 relative z-10 w-full">
-
-                <button onClick={() => router.back()} className="text-zinc-500 hover:text-white transition-colors text-sm flex items-center gap-2 font-medium w-fit">
-                    <ChevronLeft className="w-4 h-4" /> Back
-                </button>
-
-                <div className="space-y-2 pt-2">
-                    <span className="text-indigo-400 font-bold tracking-widest uppercase text-xs bg-indigo-500/10 px-3 py-1.5 rounded-lg">
-                        Day {todayTask.day}
-                    </span>
-                    <h1 className="text-2xl font-extrabold text-white leading-tight mt-3">
-                        {todayTask.title}
-                    </h1>
+        <div suppressHydrationWarning className="min-h-screen bg-[#050505] text-white mx-auto w-full max-w-[390px] font-sans flex flex-col relative overflow-hidden">
+            
+            {/* Header */}
+            <div className="flex items-center px-5 pt-6 pb-4">
+                <div className="flex items-center gap-2 cursor-pointer text-zinc-300 hover:text-white" onClick={() => router.back()}>
+                    <ChevronLeft className="w-4 h-4" />
+                    <span className="font-medium text-[14px]">Back</span>
                 </div>
+            </div>
 
-                <div className="bg-white/5 border border-white/10 rounded-2xl p-5 shadow-lg backdrop-blur-sm">
-                    <h3 className="text-sm font-bold text-zinc-300 mb-2">What you need to build:</h3>
-                    <p className="text-sm text-zinc-400 leading-relaxed">
+            {/* Content */}
+            <div className="px-5 pb-8 flex-1 overflow-y-auto">
+                <div className="inline-block bg-purple-500/10 text-purple-400 text-[10px] font-bold px-2 py-1 rounded mb-4 tracking-wider">
+                    DAY {todayTask.day}
+                </div>
+                
+                <h1 className="text-[22px] font-bold text-white mb-6 tracking-tight">
+                    {todayTask.title}
+                </h1>
+
+                {/* Info Card */}
+                <div className="bg-[#0d0d12] border border-white/5 rounded-2xl p-5 mb-8">
+                    <h2 className="text-[14px] font-bold text-white mb-2">What you need to build:</h2>
+                    <p className="text-[13px] text-zinc-400 leading-relaxed">
                         {todayTask.description}
                     </p>
                 </div>
 
-                {!submitted ? (
-                    <form onSubmit={handleSubmit} className="space-y-5 pt-4">
-                        <div className="space-y-2">
-                            <label className="text-xs font-bold text-zinc-500 uppercase tracking-wider ml-1">GitHub Commit URL</label>
-                            <input
-                                type="url"
-                                required
-                                placeholder="https://github.com/..."
-                                value={github}
-                                onChange={(e) => setGithub(e.target.value)}
-                                className="w-full bg-[#111] border border-white/10 rounded-xl px-4 py-4 outline-none focus:border-indigo-500 focus:bg-white/5 transition-all text-[15px] placeholder:text-zinc-600 shadow-inner"
+                {/* Form Fields */}
+                <div className="space-y-5">
+                    <div>
+                        <label className="block text-[10px] font-bold text-zinc-500 uppercase tracking-widest mb-2">
+                            GITHUB COMMIT URL
+                        </label>
+                        <div className="relative">
+                            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                <GithubIcon className="w-4 h-4 text-zinc-400" />
+                            </div>
+                            <input 
+                                type="text"
+                                placeholder="https://github.com/username/repo/commit/..."
+                                className="w-full bg-[#111111] border border-white/5 text-white text-[13px] rounded-2xl pl-11 pr-4 py-4 focus:outline-none focus:border-purple-500/50 transition-colors placeholder:text-zinc-600"
                             />
                         </div>
+                    </div>
 
-                        <div className="space-y-2">
-                            <label className="text-xs font-bold text-zinc-500 uppercase tracking-wider ml-1">LinkedIn Post URL</label>
-                            <input
-                                type="url"
-                                required
-                                placeholder="https://linkedin.com/posts/..."
-                                value={linkedin}
-                                onChange={(e) => setLinkedin(e.target.value)}
-                                className="w-full bg-[#111] border border-white/10 rounded-xl px-4 py-4 outline-none focus:border-indigo-500 focus:bg-white/5 transition-all text-[15px] placeholder:text-zinc-600 shadow-inner"
+                    <div>
+                        <label className="block text-[10px] font-bold text-zinc-500 uppercase tracking-widest mb-2">
+                            LINKEDIN POST URL
+                        </label>
+                        <div className="relative">
+                            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                <LinkedinIcon className="w-4 h-4 text-zinc-400" />
+                            </div>
+                            <input 
+                                type="text"
+                                placeholder="https://linkedin.com/posts/username/..."
+                                className="w-full bg-[#111111] border border-white/5 text-white text-[13px] rounded-2xl pl-11 pr-4 py-4 focus:outline-none focus:border-purple-500/50 transition-colors placeholder:text-zinc-600"
                             />
                         </div>
+                    </div>
+                </div>
 
-                        <div className="pt-6">
-                            <motion.button
-                                whileHover={{ scale: 1.02, boxShadow: "0px 0px 20px rgba(99,102,241,0.4)" }}
-                                whileTap={{ scale: 0.95, rotate: [0, -2, 2, -2, 0] }}
-                                type="submit"
-                                disabled={isSubmitting}
-                                className="w-full bg-indigo-500 hover:bg-indigo-600 disabled:bg-indigo-500/50 text-white py-4 rounded-xl font-bold text-[15px] shadow-[0_0_20px_rgba(99,102,241,0.3)] flex justify-center items-center"
-                            >
-                                {isSubmitting ? (
-                                    <span className="flex items-center gap-2">
-                                        <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
-                                        Verifying...
-                                    </span>
-                                ) : (
-                                    "Submit Proof of Work"
-                                )}
-                            </motion.button>
+                {/* Why we ask */}
+                <div className="bg-[#0a0714] border border-purple-500/20 rounded-2xl p-5 mt-6 mb-8 flex gap-3">
+                    <ShieldCheck className="w-5 h-5 text-purple-400 shrink-0 mt-0.5" />
+                    <div>
+                        <h3 className="text-[14px] font-bold text-white mb-1">Why we ask?</h3>
+                        <p className="text-[12px] text-zinc-400 leading-relaxed">
+                            We verify your work to ensure authenticity and help you get noticed.
+                        </p>
+                    </div>
+                </div>
+
+                {/* Submit Button */}
+                <motion.button
+                    whileTap={{ scale: 0.97 }}
+                    onClick={handleRunTests}
+                    disabled={isSubmitting || submitted}
+                    className="w-full bg-gradient-to-r from-blue-600 to-pink-500 text-white py-4 rounded-xl font-bold text-[15px] shadow-[0_0_20px_rgba(236,72,153,0.3)] flex justify-center items-center gap-2 transition-all relative overflow-hidden"
+                >
+                    {isSubmitting ? (
+                        <>
+                            <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                            Submitting...
+                        </>
+                    ) : (
+                        <>
+                            Submit Proof of Work <ArrowRight className="w-5 h-5" />
+                        </>
+                    )}
+                </motion.button>
+                
+                {/* Illustration Space */}
+                <div className="mt-12 flex justify-center items-center opacity-60">
+                    <div className="w-48 h-32 bg-gradient-to-t from-purple-900/30 to-transparent rounded-t-xl relative border-b border-purple-500/30 flex items-end justify-center pb-4">
+                        <div className="text-purple-400/50 text-sm font-bold flex flex-col items-center gap-2">
+                           <Check className="w-8 h-8 opacity-50" />
                         </div>
-                    </form>
-                ) : (
-                    <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="bg-emerald-500/10 border border-emerald-500/20 rounded-3xl p-8 text-center space-y-4 mt-8 backdrop-blur-sm shadow-2xl">
-                        <div className="text-5xl mb-4 drop-shadow-[0_0_15px_rgba(16,185,129,0.4)]">🎉</div>
-                        <h3 className="text-xl font-bold text-emerald-400">Submission Accepted!</h3>
-                        <p className="text-sm text-emerald-400/70 leading-relaxed">Your proof of work has been recorded. Your streak is safe.</p>
-                        <Link href="/dashboard" className="block pt-6">
-                            <motion.button 
-                                whileHover={{ scale: 1.02 }}
-                                whileTap={{ scale: 0.95, rotate: [0, -2, 2, -2, 0] }}
-                                className="w-full bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 py-3.5 rounded-xl font-bold text-sm border border-emerald-500/30 shadow-[0_0_15px_rgba(16,185,129,0.1)]"
-                            >
-                                Return to Dashboard
-                            </motion.button>
-                        </Link>
+                    </div>
+                </div>
+            </div>
+
+            {/* Success Overlay Modal */}
+            <AnimatePresence>
+                {submitted && (
+                    <motion.div 
+                        initial={{ opacity: 0 }} 
+                        animate={{ opacity: 1 }} 
+                        className="absolute inset-0 z-50 flex flex-col items-center justify-center p-6 bg-[#0a0515]/95 backdrop-blur-xl"
+                    >
+                        {/* Radial Glow */}
+                        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(168,85,247,0.15)_0%,transparent_70%)] pointer-events-none"></div>
+
+                        <motion.div 
+                            initial={{ scale: 0.8, opacity: 0, y: 20 }}
+                            animate={{ scale: 1, opacity: 1, y: 0 }}
+                            transition={{ type: "spring", stiffness: 200, damping: 20, delay: 0.1 }}
+                            className="text-center w-full max-w-[320px] relative z-10"
+                        >
+                            {/* Checkmark icon */}
+                            <div className="w-24 h-24 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-8 shadow-[0_0_40px_rgba(34,197,94,0.5)] border-4 border-black">
+                                <Check className="w-12 h-12 text-black" strokeWidth={4} />
+                            </div>
+                            
+                            <h2 className="text-[32px] font-black text-white mb-6 tracking-tight leading-[1.1]">
+                                CHALLENGE<br/>COMPLETED
+                            </h2>
+                            
+                            <div className="flex justify-center gap-3 mb-10">
+                                <span className="text-[12px] font-bold bg-indigo-500/20 text-indigo-400 px-3.5 py-1.5 rounded-md uppercase tracking-wider">
+                                    Day {todayTask.day}
+                                </span>
+                                <span className="text-[12px] font-bold bg-orange-500/20 text-orange-400 px-3.5 py-1.5 rounded-md uppercase tracking-wider flex items-center gap-1.5">
+                                    <Flame className="w-3.5 h-3.5" /> +1 STREAK
+                                </span>
+                            </div>
+
+                            <div className="space-y-3">
+                                <motion.button 
+                                    whileTap={{ scale: 0.97 }}
+                                    className="w-full bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-xl font-bold text-[13px] tracking-wider flex justify-center items-center gap-2 shadow-[0_0_20px_rgba(37,99,235,0.4)] transition-all"
+                                >
+                                    <div className="bg-white text-blue-600 rounded-sm p-0.5">
+                                        <span className="font-serif text-[10px] px-1 font-bold">in</span>
+                                    </div>
+                                    SHARE TO LINKEDIN
+                                </motion.button>
+                                <motion.button 
+                                    whileTap={{ scale: 0.97 }}
+                                    onClick={() => router.push('/dashboard')}
+                                    className="w-full bg-[#111] border border-white/10 hover:bg-white/5 text-zinc-300 py-4 rounded-xl font-bold text-[13px] tracking-wider transition-all"
+                                >
+                                    RETURN TO DASHBOARD
+                                </motion.button>
+                            </div>
+                        </motion.div>
                     </motion.div>
                 )}
+            </AnimatePresence>
 
-            </motion.div>
         </div>
     );
 }
