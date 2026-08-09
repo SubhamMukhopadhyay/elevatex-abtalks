@@ -6,27 +6,30 @@ import { Code2, Rocket, Zap, Flame, ChevronRight, Menu, Folder } from "lucide-re
 
 export default function Landing() {
   return (
-    <div className="min-h-screen bg-[#050505] text-white p-6 mx-auto w-full max-w-[390px] font-sans flex flex-col relative overflow-hidden">
+    <div className="min-h-screen bg-[#050505] text-white font-sans flex flex-col w-full relative overflow-hidden">
       
       {/* Binary Background Texture */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-30">
-        {[...Array(6)].map((_, i) => (
+      <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-50 md:opacity-60">
+        {[...Array(15)].map((_, i) => (
           <motion.div
             key={i}
-            className="absolute top-0 flex flex-col font-mono font-bold text-purple-400/20 text-[14px] leading-[2.5]"
-            style={{ left: `${i * 20}%` }}
+            className="absolute top-0 flex flex-col font-mono font-bold text-purple-400/30 text-[14px] leading-[2.5]"
+            style={{ left: `${i * 7}%` }}
             animate={{ y: i % 2 === 0 ? ["0%", "-50%"] : ["-50%", "0%"] }}
             transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
           >
             <div className="whitespace-pre text-center">
-              0{"\n"}1{"\n"}0{"\n"}0{"\n"}1{"\n"}1{"\n"}0{"\n"}1{"\n"}1{"\n"}0{"\n"}0{"\n"}1{"\n"}0{"\n"}1{"\n"}1{"\n"}0
+              0{"\n"}1{"\n"}0{"\n"}1{"\n"}0{"\n"}1{"\n"}0{"\n"}1{"\n"}0{"\n"}1{"\n"}0{"\n"}1{"\n"}0{"\n"}1{"\n"}0{"\n"}1
             </div>
             <div className="whitespace-pre text-center">
-              0{"\n"}1{"\n"}0{"\n"}0{"\n"}1{"\n"}1{"\n"}0{"\n"}1{"\n"}1{"\n"}0{"\n"}0{"\n"}1{"\n"}0{"\n"}1{"\n"}1{"\n"}0
+              0{"\n"}1{"\n"}0{"\n"}1{"\n"}0{"\n"}1{"\n"}0{"\n"}1{"\n"}0{"\n"}1{"\n"}0{"\n"}1{"\n"}0{"\n"}1{"\n"}0{"\n"}1
             </div>
           </motion.div>
         ))}
       </div>
+      
+      {/* Centered Content Container */}
+      <div className="mx-auto w-full p-6 md:px-16 md:py-10 lg:px-24 lg:py-12 flex-1 flex flex-col relative z-10">
       
       {/* Header */}
       <div className="flex justify-start items-center w-full relative z-20 mb-8 pt-2">
@@ -49,28 +52,33 @@ export default function Landing() {
         className="absolute bottom-20 left-0 w-40 h-40 bg-indigo-600/20 rounded-full blur-[60px] pointer-events-none"
       />
 
-      <div className="flex-1 flex flex-col justify-center items-center text-center space-y-8 z-10 w-full relative -mt-4">
+      <motion.div initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="flex-1 flex flex-col md:flex-row md:items-center md:text-left justify-center items-center text-center space-y-8 md:space-y-0 md:gap-16 z-10 w-full relative -mt-4">
         
-        {/* Exclusives Tag */}
-        <div className="inline-flex items-center gap-2 bg-indigo-950/40 border border-purple-500/30 px-3 py-1.5 rounded-full text-[10px] font-bold text-purple-400 uppercase tracking-widest shadow-[0_0_15px_rgba(168,85,247,0.15)]">
-          <Zap className="w-3 h-3 text-purple-400 fill-purple-400" />
-          ABTALKS EXCLUSIVES
+        {/* Left Column for Desktop */}
+        <div className="w-full md:w-1/2 space-y-8 flex flex-col items-center md:items-start text-left">
+          {/* Exclusives Tag */}
+          <div className="inline-flex items-center gap-2 bg-indigo-950/40 border border-purple-500/30 px-3 py-1.5 rounded-full text-[10px] font-bold text-purple-400 uppercase tracking-widest shadow-[0_0_15px_rgba(168,85,247,0.15)]">
+            <Zap className="w-3 h-3 text-purple-400 fill-purple-400" />
+            ABTALKS EXCLUSIVES
+          </div>
+
+          {/* Hero Typography */}
+          <div className="space-y-4 w-full">
+            <h1 className="text-[2.5rem] md:text-[3.5rem] font-black leading-[1.1] text-white tracking-tight text-left">
+              The 60-Day <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-fuchsia-400 drop-shadow-[0_0_12px_rgba(192,38,211,0.4)]">
+                Coding Challenge
+              </span>
+            </h1>
+            <p className="text-zinc-400 text-sm md:text-base leading-relaxed text-left font-medium pr-4 md:pr-0">
+              Pick a track, build something every day, and maintain a public learning streak to become visible to top recruiters.
+            </p>
+          </div>
         </div>
 
-        {/* Hero Typography */}
-        <div className="space-y-4 w-full">
-          <h1 className="text-[2.5rem] font-black leading-[1.1] text-white tracking-tight text-left">
-            The 60-Day <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-fuchsia-400 drop-shadow-[0_0_12px_rgba(192,38,211,0.4)]">
-              Coding Challenge
-            </span>
-          </h1>
-          <p className="text-zinc-400 text-sm leading-relaxed text-left font-medium pr-4">
-            Pick a track, build something every day, and maintain a public learning streak to become visible to top recruiters.
-          </p>
-        </div>
-
-        {/* Feature Cards Grid */}
+        {/* Right Column for Desktop */}
+        <div className="w-full md:w-1/2 space-y-8 flex flex-col">
+          {/* Feature Cards Grid */}
         <div className="grid grid-cols-3 gap-3 w-full pt-4">
             <div className="flex flex-col items-center text-center bg-[#0a0a0a]/80 border border-white/5 rounded-2xl p-4 gap-3 shadow-lg backdrop-blur-sm">
                 <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center">
@@ -109,13 +117,13 @@ export default function Landing() {
           <Link href="/dashboard" className="block w-full">
             <motion.button 
               whileTap={{ scale: 0.97 }}
-              className="w-full bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white py-4 rounded-2xl font-bold text-[15px] shadow-[0_0_25px_rgba(168,85,247,0.4)] flex items-center justify-center gap-2"
+              className="w-full bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 text-white py-4 rounded-2xl font-bold text-[15px] shadow-[0_0_25px_rgba(168,85,247,0.4)] flex items-center justify-center gap-2 cursor-pointer"
             >
               Start Your Journey <ChevronRight className="w-5 h-5" />
             </motion.button>
           </Link>
           
-          <div className="flex items-center justify-center gap-3">
+          <div className="flex items-center justify-center md:justify-start gap-3">
               <div className="flex -space-x-3">
                   <img src="https://api.dicebear.com/7.x/notionists/svg?seed=John&backgroundColor=transparent" className="w-8 h-8 rounded-full border-2 border-[#050505] bg-indigo-500/20" alt="student" />
                   <img src="https://api.dicebear.com/7.x/notionists/svg?seed=Sarah&backgroundColor=transparent" className="w-8 h-8 rounded-full border-2 border-[#050505] bg-purple-500/20" alt="student" />
@@ -127,6 +135,8 @@ export default function Landing() {
               </p>
           </div>
         </div>
+        </div>
+      </motion.div>
       </div>
       
       {/* Bottom Wave decoration mimicking the reference */}
