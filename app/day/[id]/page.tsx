@@ -125,7 +125,7 @@ export default function ChallengeDay({ params }: { params: Promise<{ id: string 
                   </div>
 
                   {/* Right Column */}
-                  <div className="md:flex-1 md:bg-[#0a0a0a]/80 md:border md:border-white/5 md:p-8 md:rounded-3xl md:shadow-xl md:backdrop-blur-sm mt-8 md:mt-0">
+                  <div className="md:flex-1 md:bg-[#0a0a0a]/80 md:border md:border-white/5 md:p-8 md:rounded-3xl md:shadow-xl mt-8 md:mt-0">
                       {/* Form Fields */}
                 <div className="space-y-5">
                     <div>
@@ -215,7 +215,7 @@ export default function ChallengeDay({ params }: { params: Promise<{ id: string 
                     <motion.div 
                         initial={{ opacity: 0 }} 
                         animate={{ opacity: 1 }} 
-                        className="absolute inset-0 z-50 flex flex-col items-center justify-center p-6 bg-[#0a0515]/95 backdrop-blur-xl"
+                        className="absolute inset-0 z-50 flex flex-col items-center justify-center p-6 bg-[#0a0515]/95"
                     >
                         {/* Radial Glow */}
                         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(168,85,247,0.15)_0%,transparent_70%)] pointer-events-none"></div>
