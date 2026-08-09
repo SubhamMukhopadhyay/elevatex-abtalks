@@ -11,10 +11,12 @@ export default function Landing() {
       {/* Binary Background Texture */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-50 md:opacity-60">
         {[...Array(15)].map((_, i) => (
-          <div
+          <motion.div
             key={i}
             className="absolute top-0 flex flex-col font-mono font-bold text-purple-400/30 text-[14px] leading-[2.5]"
             style={{ left: `${i * 7}%` }}
+            animate={{ y: i % 2 === 0 ? ["0%", "-50%"] : ["-50%", "0%"] }}
+            transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
           >
             <div className="whitespace-pre text-center">
               0{"\n"}1{"\n"}0{"\n"}1{"\n"}0{"\n"}1{"\n"}0{"\n"}1{"\n"}0{"\n"}1{"\n"}0{"\n"}1{"\n"}0{"\n"}1{"\n"}0{"\n"}1
@@ -22,7 +24,7 @@ export default function Landing() {
             <div className="whitespace-pre text-center">
               0{"\n"}1{"\n"}0{"\n"}1{"\n"}0{"\n"}1{"\n"}0{"\n"}1{"\n"}0{"\n"}1{"\n"}0{"\n"}1{"\n"}0{"\n"}1{"\n"}0{"\n"}1
             </div>
-          </div>
+          </motion.div>
         ))}
       </div>
       
