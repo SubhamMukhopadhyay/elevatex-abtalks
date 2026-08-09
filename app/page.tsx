@@ -69,34 +69,34 @@ export default function Landing() {
 
         {/* Feature Cards Grid */}
         <div className="grid grid-cols-3 gap-3 w-full pt-4">
-            <div className="flex flex-col items-center text-center bg-[#0a0a0a]/90 border border-white/5 rounded-2xl p-4 py-5 gap-3 shadow-lg">
-                <div className="w-9 h-9 rounded-full bg-white/5 flex items-center justify-center">
-                    <Code2 className="w-4 h-4 text-[#a855f7]" strokeWidth={2.5} />
+            <div className="flex flex-col items-center text-center bg-[#0a0a0a]/80 border border-white/5 rounded-2xl p-4 gap-3 shadow-lg">
+                <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center">
+                    <Code2 className="w-5 h-5 text-indigo-400" />
                 </div>
                 <div className="space-y-1">
-                    <div className="text-[11px] font-bold text-white leading-tight">Build Daily</div>
-                    <div className="text-[9px] text-zinc-500 leading-tight">Solve, code &<br/>ship daily</div>
+                    <div className="text-xs font-bold text-white leading-tight">Build Daily</div>
+                    <div className="text-[10px] text-zinc-500 leading-tight">Solve, code &<br/>ship daily</div>
                 </div>
             </div>
             
-            <div className="flex flex-col items-center text-center bg-[#0a0a0a]/90 border border-white/5 rounded-2xl p-4 py-5 gap-3 shadow-lg relative overflow-hidden">
+            <div className="flex flex-col items-center text-center bg-[#0a0a0a]/80 border border-white/5 rounded-2xl p-4 gap-3 shadow-lg relative overflow-hidden">
                 <div className="absolute inset-0 bg-orange-500/5 opacity-50"></div>
-                <div className="w-9 h-9 rounded-full bg-white/5 flex items-center justify-center relative z-10">
-                    <Flame className="w-4 h-4 text-orange-500" strokeWidth={2.5} />
+                <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center relative z-10">
+                    <Flame className="w-5 h-5 text-orange-500" />
                 </div>
                 <div className="space-y-1 relative z-10">
-                    <div className="text-[11px] font-bold text-white leading-tight">Keep Streak</div>
-                    <div className="text-[9px] text-zinc-500 leading-tight">Maintain<br/>consistency</div>
+                    <div className="text-xs font-bold text-white leading-tight">Keep Streak</div>
+                    <div className="text-[10px] text-zinc-500 leading-tight">Maintain<br/>consistency</div>
                 </div>
             </div>
             
-            <div className="flex flex-col items-center text-center bg-[#0a0a0a]/90 border border-white/5 rounded-2xl p-4 py-5 gap-3 shadow-lg">
-                <div className="w-9 h-9 rounded-full bg-white/5 flex items-center justify-center">
-                    <Rocket className="w-4 h-4 text-[#a855f7]" strokeWidth={2.5} />
+            <div className="flex flex-col items-center text-center bg-[#0a0a0a]/80 border border-white/5 rounded-2xl p-4 gap-3 shadow-lg">
+                <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center">
+                    <Rocket className="w-5 h-5 text-purple-400" />
                 </div>
                 <div className="space-y-1">
-                    <div className="text-[11px] font-bold text-white leading-tight">Get Hired</div>
-                    <div className="text-[9px] text-zinc-500 leading-tight">Get noticed by<br/>top recruiters</div>
+                    <div className="text-xs font-bold text-white leading-tight">Get Hired</div>
+                    <div className="text-[10px] text-zinc-500 leading-tight">Get noticed by<br/>top recruiters</div>
                 </div>
             </div>
         </div>
