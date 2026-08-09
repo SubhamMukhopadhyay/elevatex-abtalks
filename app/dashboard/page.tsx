@@ -542,7 +542,7 @@ export default function Dashboard() {
                                     <div className="flex-1 text-left pl-6">
                                         <div className="text-[9px] font-bold text-zinc-500 uppercase tracking-widest mb-1.5">Country</div>
                                         <div className="text-[13px] font-medium text-zinc-300 flex items-center justify-start gap-1.5">
-                                            <span className="text-base">🇮🇳</span> India
+                                            India
                                         </div>
                                     </div>
                                 </div>
