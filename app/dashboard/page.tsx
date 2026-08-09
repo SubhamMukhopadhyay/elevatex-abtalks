@@ -143,6 +143,17 @@ export default function Dashboard() {
         };
     }, [timerActive, secondsLeft]);
 
+    useEffect(() => {
+        if (isCardModalOpen || isFreezeModalOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'unset';
+        }
+        return () => {
+            document.body.style.overflow = 'unset';
+        };
+    }, [isCardModalOpen, isFreezeModalOpen]);
+
     const formatTime = (secs: number) => {
         const mins = Math.floor(secs / 60);
         const s = secs % 60;
